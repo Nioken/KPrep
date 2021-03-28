@@ -1,0 +1,19 @@
+﻿<Window x:Class="WpfApp1.Forms.DoctorForms.DoctorMain"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfApp1.Forms.DoctorForms"
+        mc:Ignorable="d"
+        Title="DoctorMain" Height="338.122" Width="611.05" Loaded="Window_Loaded">
+    <Grid>
+        <StackPanel>
+            <WrapPanel>
+                <Label x:Name="InfoLabel" Content="Вы вошли как: "/>
+                <Button Content="Выйти" Margin="30,5,0,0" VerticalAlignment="Center" Click="Button_Click"/>
+            </WrapPanel>
+            <DataGrid Margin="10" Height="235" x:Name="ClientsGrid" MouseDoubleClick="ClientsGrid_MouseDoubleClick">
+            </DataGrid>
+        </StackPanel>
+    </Grid>
+</Window>

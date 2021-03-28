@@ -77,22 +77,22 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="Forms\AddService.xaml">
+    <Page Include="Forms\AdminForms\AddService.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Forms\AdminForm.xaml">
+    <Page Include="Forms\AdminForms\AdminForm.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Forms\MainWindow.xaml">
+    <Page Include="Forms\AdminForms\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Compile Include="Forms\AddService.xaml.cs">
+    <Compile Include="Forms\AdminForms\AddService.xaml.cs">
       <DependentUpon>AddService.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Forms\AdminForm.xaml.cs">
+    <Compile Include="Forms\AdminForms\AdminForm.xaml.cs">
       <DependentUpon>AdminForm.xaml</DependentUpon>
     </Compile>
     <Compile Include="App.xaml.cs">
@@ -105,10 +105,22 @@
     <Compile Include="Classes\Result.cs" />
     <Compile Include="Classes\Ticket.cs" />
     <Compile Include="Classes\Worker.cs" />
-    <Compile Include="Forms\MainWindow.xaml.cs">
+    <Compile Include="Forms\AdminForms\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Forms\DoctorForms\DoctorMain.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Forms\DoctorForms\DoctorTicketsList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Forms\DoctorForms\ResultForm.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Forms\RegistratorForms\ClientAdd.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -125,16 +137,25 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Forms\ServicesWindow.xaml">
+    <Page Include="Forms\AdminForms\ServicesWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Forms\WorkerAddForm.xaml">
+    <Page Include="Forms\AdminForms\WorkerAddForm.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Forms\DoctorForms\DoctorMain.xaml.cs">
+      <DependentUpon>DoctorMain.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\DoctorForms\DoctorTicketsList.xaml.cs">
+      <DependentUpon>DoctorTicketsList.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\DoctorForms\ResultForm.xaml.cs">
+      <DependentUpon>ResultForm.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Forms\RegistratorForms\ClientAdd.xaml.cs">
       <DependentUpon>ClientAdd.xaml</DependentUpon>
     </Compile>
@@ -147,10 +168,10 @@
     <Compile Include="Forms\RegistratorForms\TicketListForm.xaml.cs">
       <DependentUpon>TicketListForm.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Forms\ServicesWindow.xaml.cs">
+    <Compile Include="Forms\AdminForms\ServicesWindow.xaml.cs">
       <DependentUpon>ServicesWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Forms\WorkerAddForm.xaml.cs">
+    <Compile Include="Forms\AdminForms\WorkerAddForm.xaml.cs">
       <DependentUpon>WorkerAddForm.xaml</DependentUpon>
     </Compile>
     <Compile Include="MyDBContext.cs" />

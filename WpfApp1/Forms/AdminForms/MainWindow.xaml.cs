@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using WFAEntity.API;
 using WpfApp1.Classes;
+using WpfApp1.Forms.DoctorForms;
 using WpfApp1.Forms.RegistratorForms;
 
 namespace WpfApp1
@@ -87,6 +88,12 @@ namespace WpfApp1
                 if (tmp[0].AccessLevel.AccessLevelID == 1){
                     AdminForm adminForm = new AdminForm(tmp[0].Name, tmp[0].Surname, tmp[0].Lastname, tmp[0].Specialize);
                     adminForm.Show();
+                    this.Close();
+                }
+                if (tmp[0].AccessLevel.AccessLevelID == 2)
+                {
+                    DoctorMain DoctorForm = new DoctorMain(tmp[0].Name, tmp[0].Surname, tmp[0].Lastname, tmp[0].Specialize);
+                    DoctorForm.Show();
                     this.Close();
                 }
                 if (tmp[0].AccessLevel.AccessLevelID == 3)
