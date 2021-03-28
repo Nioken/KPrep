@@ -12,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using WFAEntity.API;
 using WpfApp1.Classes;
 
 namespace WpfApp1.Forms
@@ -24,7 +25,7 @@ namespace WpfApp1.Forms
         public void UpdateGrid()
         {
             List<ShowServiceStruct> serviceStructs = new List<ShowServiceStruct>();
-            var tmp = MyDBContext.PaidServices.ToList();
+            var tmp = MyDBContext.DBContext.PaidServices.ToList();
             for (int i = 0; i < tmp.Count; i++)
             {
                 serviceStructs.Add(new ShowServiceStruct(tmp[i].ServiceID, tmp[i].Name, tmp[i].Price, tmp[i].Worker.Name + " " + tmp[i].Worker.Surname + " " + tmp[i].Worker.Lastname));
@@ -50,7 +51,6 @@ namespace WpfApp1.Forms
             }
          }
  
-        WFAEntity.API.MyDBContext MyDBContext = new WFAEntity.API.MyDBContext();
         public ServicesWindow()
         {
             InitializeComponent();
@@ -73,12 +73,12 @@ namespace WpfApp1.Forms
             //var SelectedService = row.Item as ShowServiceStruct;
             var itm = (ShowServiceStruct)ServicesGrid.SelectedItem;
             var tmp = (
-    from tmpService in MyDBContext.PaidServices.ToList<PaidServices>()
+    from tmpService in MyDBContext.DBContext.PaidServices.ToList<PaidServices>()
     where tmpService.ServiceID.CompareTo(itm.ID) == 0
     select tmpService
           ).ToList();
-            MyDBContext.PaidServices.Remove(tmp[0]);
-            MyDBContext.SaveChanges();
+            MyDBContext.DBContext.PaidServices.Remove(tmp[0]);
+            MyDBContext.DBContext.SaveChanges();
             UpdateGrid();
         }
 
@@ -86,7 +86,7 @@ namespace WpfApp1.Forms
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
             var itm = (ShowServiceStruct)ServicesGrid.SelectedItem;
-            PaidServices EditService = MyDBContext.PaidServices.Find(itm.ID);
+            PaidServices EditService = MyDBContext.DBContext.PaidServices.Find(itm.ID);
             AddService AddForm = new AddService(this, EditService);
             AddForm.ShowDialog();
         }

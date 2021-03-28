@@ -5,13 +5,22 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp1.Forms.RegistratorForms"
         mc:Ignorable="d"
-        Title="RegistratorWindow" Height="450" Width="800">
+        Title="RegistratorWindow" Height="450" Width="800" Loaded="Window_Loaded">
     <Grid>
         <StackPanel>
             <WrapPanel Margin="10">
                 <Label x:Name="InfoLabel" Content="Вы вошли как: "/>
                 <Button Content="Выйти" Margin="10,0,0,0" Click="Button_Click"/>
             </WrapPanel>
+            <WrapPanel Margin="10,45,0,0">
+                <Button Content="Добивать" Height="30" Click="Button_Click_1"/>
+                <Button x:Name="DeleteButton" Content ="Удалить" Margin="10,0,0,0" Click="DeleteButton_Click"/>
+                <Button Content="Изменить" x:Name="EditButton" Margin="10,0,0,0" Click="EditButton_Click"/>
+                <Button Content="Простомтреть список талонов" Margin="417,0,0,0" Click="Button_Click_2"/>
+            </WrapPanel>
+            <StackPanel Margin="0,0,0,0">
+                <DataGrid Height="250" Margin="10,0,10,0" x:Name="ClientsGrid" AutoGenerateColumns="True" IsReadOnly="True" Background="#FFC7BDBD" Foreground="#FF231E20" Opacity="0.9" HorizontalGridLinesBrush="#FF3C3939" VerticalGridLinesBrush="#FF3C3939" CanUserResizeRows="False" BorderBrush="White" MouseDoubleClick="ClientsGrid_MouseDoubleClick"/>
+            </StackPanel>
         </StackPanel>
     </Grid>
 </Window>

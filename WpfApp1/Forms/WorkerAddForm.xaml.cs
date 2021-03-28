@@ -12,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using WFAEntity.API;
 using WpfApp1.Classes;
 
 namespace WpfApp1.Forms
@@ -24,7 +25,6 @@ namespace WpfApp1.Forms
         AdminForm AF;
         bool IsEdit = false;
         Worker EditWorker;
-        WFAEntity.API.MyDBContext MyDBContext = new WFAEntity.API.MyDBContext();
         public WorkerAddForm(AdminForm AF)
         {
             this.AF = AF;
@@ -52,7 +52,7 @@ namespace WpfApp1.Forms
                     && !String.IsNullOrWhiteSpace(PhoneBox.Text) && !String.IsNullOrWhiteSpace(LoginBox.Text) && !String.IsNullOrWhiteSpace(PasswordBox.Text))
                 {
                     Worker WorkerObj = new Worker();
-                    int Temp = MyDBContext.AccessLevels.Count();
+                    int Temp = MyDBContext.DBContext.AccessLevels.Count();
                     WorkerObj.WorkerID = Temp++;
                     WorkerObj.Name = NameBox.Text;
                     WorkerObj.Surname = SurnameBox.Text;
@@ -65,7 +65,7 @@ namespace WpfApp1.Forms
                     WorkerObj.Password = PasswordBox.Text;
                     //WorkerObj.AccessILevelD = 1;
                     var tmp = (
-                        from tmpAccesLevels in MyDBContext.AccessLevels.ToList<AccessLevel>()
+                        from tmpAccesLevels in MyDBContext.DBContext.AccessLevels.ToList<AccessLevel>()
                         select tmpAccesLevels
                         ).ToList();
                     if (AccessCombo.SelectedIndex == 1)
@@ -80,7 +80,7 @@ namespace WpfApp1.Forms
                     {
                         WorkerObj.AccessLevel = tmp[2];
                     }
-                    MyDBContext.Workers.Add(WorkerObj);
+                    MyDBContext.DBContext.Workers.Add(WorkerObj);
                     NameBox.Text = String.Empty;
                     SurnameBox.Text = String.Empty;
                     LastNameBox.Text = String.Empty;
@@ -89,7 +89,7 @@ namespace WpfApp1.Forms
                     PhoneBox.Text = String.Empty;
                     LoginBox.Text = String.Empty;
                     PasswordBox.Text = String.Empty;
-                    MyDBContext.SaveChanges();
+                    MyDBContext.DBContext.SaveChanges();
                     AF.UpdateGrid();
                 }
                 else
@@ -109,7 +109,7 @@ namespace WpfApp1.Forms
                 EditWorker.Password = PasswordBox.Text;
                 EditWorker.Birthday = (DateTime)WorkerDatePicker.SelectedDate;
                 var tmp = (
-                    from tmpAccesLevels in MyDBContext.AccessLevels.ToList<AccessLevel>()
+                    from tmpAccesLevels in MyDBContext.DBContext.AccessLevels.ToList<AccessLevel>()
                     select tmpAccesLevels
                     ).ToList();
                 if (AccessCombo.SelectedIndex == 1)
@@ -124,8 +124,8 @@ namespace WpfApp1.Forms
                 {
                     EditWorker.AccessLevel = tmp[2];
                 }
-                MyDBContext.Workers.AddOrUpdate(EditWorker);
-                MyDBContext.SaveChanges();
+                MyDBContext.DBContext.Workers.AddOrUpdate(EditWorker);
+                MyDBContext.DBContext.SaveChanges();
                 AF.UpdateGrid();
             }
         }

@@ -24,7 +24,7 @@ namespace WpfApp1.Classes
         [Required]
         public string Phone { get; set; }
         [Required]
-        public char Gender { get; set; }
-        public virtual ICollection<Ticket> clientID { get; set; }
+        public string Gender { get; set; }
+        public virtual ICollection<Ticket> Tickets { get; set; }
     }
 }

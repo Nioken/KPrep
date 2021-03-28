@@ -12,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using WFAEntity.API;
 using WpfApp1.Classes;
 using WpfApp1.Forms;
 
@@ -24,7 +25,7 @@ namespace WpfApp1
     {
         public void UpdateGrid()
         {
-            WorkersGrid.ItemsSource = MyDBContext.Workers.ToList();
+            WorkersGrid.ItemsSource = MyDBContext.DBContext.Workers.ToList();
             WorkersGrid.Columns[0].Header = "ID сотрудника";
             WorkersGrid.Columns[1].Header = "Имя";
             WorkersGrid.Columns[2].Header = "Фамилия";
@@ -38,7 +39,6 @@ namespace WpfApp1
             WorkersGrid.Columns[10].Visibility = Visibility.Hidden;
             WorkersGrid.Columns[11].Visibility = Visibility.Hidden;
         }
-        WFAEntity.API.MyDBContext MyDBContext = new WFAEntity.API.MyDBContext();
         public AdminForm(string Name,string Surname,string Lastname,string Specialize)
         {
             InitializeComponent();
@@ -79,19 +79,19 @@ namespace WpfApp1
         {
             var itm = (Worker)WorkersGrid.SelectedItem;
             var tmp = (
-    from tmpWorker in MyDBContext.Workers.ToList<Worker>()
+    from tmpWorker in MyDBContext.DBContext.Workers.ToList<Worker>()
     where tmpWorker.WorkerID.CompareTo(itm.WorkerID) == 0
     select tmpWorker
           ).ToList();
-            MyDBContext.Workers.Remove(tmp[0]);
-            MyDBContext.SaveChanges();
+            MyDBContext.DBContext.Workers.Remove(tmp[0]);
+            MyDBContext.DBContext.SaveChanges();
             UpdateGrid();
         }
 
         private void EditButton_Click(object sender, RoutedEventArgs e)
         {
             var itm = (Worker)WorkersGrid.SelectedItem;
-            Worker EditWorker = MyDBContext.Workers.Find(itm.WorkerID);
+            Worker EditWorker = MyDBContext.DBContext.Workers.Find(itm.WorkerID);
             WorkerAddForm workerAddForm = new WorkerAddForm(this,EditWorker);
             workerAddForm.ShowDialog();
         }

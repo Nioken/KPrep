@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.Design;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,11 +15,12 @@ namespace WpfApp1.Classes
         [Required]
         public int TicketNumber { get; set; }
         [Required]
-        public DateTime WorkDate { get; set; }
+        public string WorkDate { get; set; }
         [Required]
-        public DateTime WorkTime { get; set; }
-        [Required]
-        public virtual ICollection<AnalysisMaterial> ticketID { get; set; }
+        public string WorkTime { get; set; }
+        public virtual Client Client { get; set; }
+        public virtual PaidServices PaidServices { get; set; }
+        public virtual ICollection<Result> Results { get; set; }
 
     }
 }

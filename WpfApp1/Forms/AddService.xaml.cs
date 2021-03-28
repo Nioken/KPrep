@@ -12,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using WFAEntity.API;
 using WpfApp1.Classes;
 
 namespace WpfApp1.Forms
@@ -21,7 +22,6 @@ namespace WpfApp1.Forms
     /// </summary>
     public partial class AddService : Window
     {
-        WFAEntity.API.MyDBContext MyDBContext = new WFAEntity.API.MyDBContext();
         ServicesWindow SW;
         PaidServices EditService;
         bool isEdit = false;
@@ -41,7 +41,7 @@ namespace WpfApp1.Forms
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             List<string> DoctorsName = new List<string>();
-            var tmp = MyDBContext.Workers.ToList();
+            var tmp = MyDBContext.DBContext.Workers.ToList();
             for(int i = 0; i < tmp.Count; i++)
             {
                 DoctorsName.Add(tmp[i].Surname + " " + tmp[i].Name + " " + tmp[i].Lastname);
@@ -60,7 +60,7 @@ namespace WpfApp1.Forms
             string[] Names = DoctorsCombo.Text.Split(' ');
             for(int i = 0; i < List.Count; i++)
             {
-                if(List[i].Name == Names[1] && List[i].Surname == Names[0] && List[i].Name == Names[2])
+                if(List[i].Name == Names[1] && List[i].Surname == Names[0] && List[i].Lastname == Names[2])
                 {
                     return List[i];
                 }
@@ -74,13 +74,13 @@ namespace WpfApp1.Forms
                 if (!String.IsNullOrWhiteSpace(NameBox.Text) && !String.IsNullOrWhiteSpace(PriceBox.Text))
                 {
                     PaidServices ps = new PaidServices();
-                    ps.ServiceID = MyDBContext.PaidServices.Count();
+                    ps.ServiceID = MyDBContext.DBContext.PaidServices.Count();
                     ps.ServiceID++;
                     ps.Name = NameBox.Text;
                     ps.Price = Convert.ToDouble(PriceBox.Text);
-                    ps.Worker = GetNeedWorker(MyDBContext.Workers.ToList());
-                    MyDBContext.PaidServices.Add(ps);
-                    MyDBContext.SaveChanges();
+                    ps.Worker = GetNeedWorker(MyDBContext.DBContext.Workers.ToList());
+                    MyDBContext.DBContext.PaidServices.Add(ps);
+                    MyDBContext.DBContext.SaveChanges();
                     NameBox.Text = String.Empty;
                     PriceBox.Text = String.Empty;
                     SW.UpdateGrid();
@@ -94,9 +94,9 @@ namespace WpfApp1.Forms
             {
                 EditService.Price = Convert.ToDouble(PriceBox.Text);
                 EditService.Name = NameBox.Text;
-                EditService.Worker = GetNeedWorker(MyDBContext.Workers.ToList());
-                MyDBContext.PaidServices.AddOrUpdate(EditService);
-                MyDBContext.SaveChanges();
+                EditService.Worker = GetNeedWorker(MyDBContext.DBContext.Workers.ToList());
+                MyDBContext.DBContext.PaidServices.AddOrUpdate(EditService);
+                MyDBContext.DBContext.SaveChanges();
                 SW.UpdateGrid();
             }
         }

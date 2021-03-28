@@ -1,0 +1,30 @@
+﻿<Window x:Class="WpfApp1.Forms.RegistratorForms.TicketAdd" ResizeMode="NoResize"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfApp1.Forms.RegistratorForms"
+        mc:Ignorable="d"
+        Title="Новый талон" Height="181.492" Width="280.387" Loaded="Window_Loaded">
+    <Grid>
+        <StackPanel Margin="5">
+            <WrapPanel HorizontalAlignment="Center">
+                <Label Content="Дата приема: " Margin="0,0,0,0"/>
+                <DatePicker x:Name="WorkDatePicker"/>
+            </WrapPanel>
+            <WrapPanel HorizontalAlignment="Center" Margin="0,10,0,0">
+                <Label Content="Время приема: " Margin="0,0,0,0"/>
+                <xctk:TimePicker DefaultValue="12:00:00" StartTime="12:0:0" Text="12:00" x:Name="WorkTimePicker"/>
+            </WrapPanel>
+            <WrapPanel HorizontalAlignment="Center" Margin="0,10,0,0">
+                <Label Content="Услуга: " Margin="0,0,0,0"/>
+                <ComboBox SelectedIndex="1" x:Name="ServicesCombo"/>
+            </WrapPanel>
+            <WrapPanel HorizontalAlignment="Center" Margin="0,10,0,0">
+                <Button x:Name="AddButton" Content="Добавить" Click="Button_Click_1"/>
+                <Button Content="Отмена" Margin="15,0,0,0" Click="Button_Click"/>
+            </WrapPanel>
+        </StackPanel>
+    </Grid>
+</Window>

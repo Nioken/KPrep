@@ -14,8 +14,8 @@ namespace WFAEntity.API
         public DbSet<PaidServices> PaidServices { get; set; }
         public DbSet<Client> Clients { get; set; }
         public DbSet<Ticket> Tickets { get; set; }
-        public DbSet<AnalysisMaterial> AnalysisMaterials { get; set; }
         public DbSet<Result> Results { get; set; }
 
+        public static WFAEntity.API.MyDBContext DBContext = new WFAEntity.API.MyDBContext();
     }
 }

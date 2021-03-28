@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WFAEntity.API;
 using WpfApp1.Classes;
 using WpfApp1.Forms.RegistratorForms;
 
@@ -22,7 +23,6 @@ namespace WpfApp1
     /// </summary>
     public partial class MainWindow : Window
     {
-        WFAEntity.API.MyDBContext MyDBContext = new WFAEntity.API.MyDBContext();
         public MainWindow()
         {
             InitializeComponent();
@@ -32,24 +32,24 @@ namespace WpfApp1
         {
             try
             {
-                if (MyDBContext.Database.Exists() == false)
+                if (MyDBContext.DBContext.Database.Exists() == false)
                 {
-                    MyDBContext.Database.Create();
+                    MyDBContext.DBContext.Database.Create();
                     List<AccessLevel> ListLevels = new List<AccessLevel>(); 
                     AccessLevel Level = new AccessLevel();
                     Level.AccessLevelID = 1;
                     Level.Level = 1;
-                    MyDBContext.AccessLevels.Add(Level);
+                    MyDBContext.DBContext.AccessLevels.Add(Level);
                     ListLevels.Add(Level);
                     Level = new AccessLevel();
                     Level.AccessLevelID = 2;
                     Level.Level = 2;
-                    MyDBContext.AccessLevels.Add(Level);
+                    MyDBContext.DBContext.AccessLevels.Add(Level);
                     ListLevels.Add(Level);
                     Level = new AccessLevel();
                     Level.AccessLevelID = 3;
                     Level.Level = 3;
-                    MyDBContext.AccessLevels.Add(Level);
+                    MyDBContext.DBContext.AccessLevels.Add(Level);
                     ListLevels.Add(Level);
                     ////
                     Worker WorkerObj = new Worker();
@@ -65,8 +65,8 @@ namespace WpfApp1
                     WorkerObj.Password = "Admin";
                     //WorkerObj.AccessILevelD = 1;
                     WorkerObj.AccessLevel = ListLevels[0];
-                    MyDBContext.Workers.Add(WorkerObj);
-                    MyDBContext.SaveChanges();
+                    MyDBContext.DBContext.Workers.Add(WorkerObj);
+                    MyDBContext.DBContext.SaveChanges();
                 }
             }
             catch (System.Exception ex)
@@ -78,7 +78,7 @@ namespace WpfApp1
         private void LoginButton_Click(object sender, RoutedEventArgs e)
         {
             var tmp = (
-                from tmpWorker in MyDBContext.Workers.ToList<Worker>()
+                from tmpWorker in MyDBContext.DBContext.Workers.ToList<Worker>()
                 where tmpWorker.Login.CompareTo(LoginBox.Text) == 0 && tmpWorker.Password.CompareTo(PasswordBox.Text) == 0
                 select tmpWorker
                       ).ToList();
