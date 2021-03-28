@@ -1,0 +1,17 @@
+﻿<Window x:Class="WpfApp1.Forms.RegistratorForms.RegistratorWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfApp1.Forms.RegistratorForms"
+        mc:Ignorable="d"
+        Title="RegistratorWindow" Height="450" Width="800">
+    <Grid>
+        <StackPanel>
+            <WrapPanel Margin="10">
+                <Label x:Name="InfoLabel" Content="Вы вошли как: "/>
+                <Button Content="Выйти" Margin="10,0,0,0" Click="Button_Click"/>
+            </WrapPanel>
+        </StackPanel>
+    </Grid>
+</Window>

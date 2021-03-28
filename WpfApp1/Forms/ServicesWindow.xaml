@@ -1,0 +1,22 @@
+﻿<Window x:Class="WpfApp1.Forms.ServicesWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfApp1.Forms"
+        mc:Ignorable="d"
+        Title="Платные услуги" Height="375.414" Width="439.503" Loaded="Window_Loaded">
+    <Grid>
+        <StackPanel>
+            <WrapPanel>
+                <Button Content="Добавить" Margin="10,10,0,0" Click="Button_Click"/>
+                <Button Content="Удалить" Margin="10,10,0,0" Click="Button_Click_1"/>
+                <Button Content="Изменить" Margin="10,10,0,0" Click="Button_Click_2"/>
+            </WrapPanel>
+            <WrapPanel>
+                <DataGrid x:Name="ServicesGrid" Height="250" Width="400" Margin="15" IsReadOnly="True" Background="#FFC7BDBD" Foreground="#FF231E20" Opacity="0.9" HorizontalGridLinesBrush="#FF3C3939" VerticalGridLinesBrush="#FF3C3939" CanUserResizeRows="False" BorderBrush="White">
+                </DataGrid>
+            </WrapPanel>
+        </StackPanel>
+    </Grid>
+</Window>
