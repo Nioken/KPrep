@@ -6,13 +6,53 @@
         xmlns:local="clr-namespace:WpfApp1.Forms"
         mc:Ignorable="d"
         Title="Новый сотрудник" Height="380" Width="372" Loaded="Window_Loaded">
+    <Window.Resources>
+        <Style x:Key="ButtonStyleGreen" TargetType="Button">
+            <Setter Property="BorderBrush">
+                <Setter.Value>
+                    <SolidColorBrush Color="Green"/>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="0.8" CornerRadius="3">
+                            <Border.Effect>
+                                <DropShadowEffect Color="#FF72FFE5" ShadowDepth="0"/>
+                            </Border.Effect>
+                            <TextBlock Foreground="{TemplateBinding BorderBrush}" Text="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="ButtonStyleRed" TargetType="Button">
+            <Setter Property="BorderBrush">
+                <Setter.Value>
+                    <SolidColorBrush Color="Red"/>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="0.8" CornerRadius="3">
+                            <Border.Effect>
+                                <DropShadowEffect Color="#FF72FFE5" ShadowDepth="0"/>
+                            </Border.Effect>
+                            <TextBlock Foreground="{TemplateBinding BorderBrush}" Text="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
     <Grid>
         <StackPanel>
-            <WrapPanel Margin="80,10,0,0">
+            <WrapPanel Margin="81,10,0,0">
                 <Label Content="Имя: "/>
                 <TextBox x:Name="NameBox" Height="20" Width="150"/>
             </WrapPanel>
-            <WrapPanel Margin="45,0,0,0">
+            <WrapPanel Margin="46,0,0,0">
                 <Label Content="Фамимлия: "/>
                 <TextBox x:Name="SurnameBox" Height="20" Width="150"/>
             </WrapPanel>
@@ -20,41 +60,41 @@
                 <Label Content="Отчество: "/>
                 <TextBox x:Name="LastNameBox" Height="20" Width="150"/>
             </WrapPanel>
-            <WrapPanel Margin="19,0,0,0">
+            <WrapPanel Margin="20,0,0,0">
                 <Label Content="Дата рождения: "/>
-                <DatePicker x:Name="WorkerDatePicker"/>
+                <DatePicker x:Name="WorkerDatePicker" Width="150"/>
             </WrapPanel>
-            <WrapPanel Margin="78,0,0,0">
+            <WrapPanel Margin="77,0,0,0">
                 <Label Content="Стаж: "/>
                 <TextBox x:Name="ExpBox" Height="20" Width="150"/>
             </WrapPanel>
-            <WrapPanel Margin="23,0,0,0">
+            <WrapPanel Margin="20,0,0,0">
                 <Label Content="Специальность: "/>
                 <TextBox x:Name="SpecializeBox" Height="20" Width="150"/>
             </WrapPanel>
-            <WrapPanel Margin="60,0,0,0">
+            <WrapPanel Margin="57,0,0,0">
                 <Label Content="Телефон: "/>
                 <TextBox x:Name="PhoneBox" Height="20" Width="150"/>
             </WrapPanel>
-            <WrapPanel Margin="73,0,0,0">
+            <WrapPanel Margin="71,0,0,0">
                 <Label Content="Логин: "/>
                 <TextBox x:Name="LoginBox" Height="20" Width="150"/>
             </WrapPanel>
-            <WrapPanel Margin="65,0,0,0">
+            <WrapPanel Margin="63,0,0,0">
                 <Label Content="Пароль: "/>
                 <TextBox x:Name="PasswordBox" Height="20" Width="150"/>
             </WrapPanel>
-            <WrapPanel Margin="15,0,0,0">
+            <WrapPanel Margin="11,0,0,0">
                 <Label Content="Уровень доступа: "/>
-                <ComboBox SelectedIndex="1" x:Name="AccessCombo">
+                <ComboBox SelectedIndex="1" x:Name="AccessCombo" Width="150">
                     <TextBlock>Администратор</TextBlock>
                     <TextBlock>Врач</TextBlock>
                     <TextBlock>Регистратор</TextBlock>
                 </ComboBox>
             </WrapPanel>
             <WrapPanel>
-                <Button Content="Добавить" x:Name="AddButton" Margin="100,30,0,0" Click="Button_Click_1"/>
-                <Button Content="Отмена" Margin="60,30,0,0" Click="Button_Click"/>
+                <Button Content="Добавить" x:Name="AddButton" Margin="100,30,0,0" Click="Button_Click_1" Style="{StaticResource ButtonStyleGreen}" Width="61"/>
+                <Button Content="Отмена" Margin="60,30,0,0" Click="Button_Click" Style="{StaticResource ButtonStyleRed}" Width="50" Height="21"/>
             </WrapPanel>
         </StackPanel>
     </Grid>

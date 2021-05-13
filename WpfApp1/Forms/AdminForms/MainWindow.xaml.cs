@@ -80,7 +80,7 @@ namespace WpfApp1
         {
             var tmp = (
                 from tmpWorker in MyDBContext.DBContext.Workers.ToList<Worker>()
-                where tmpWorker.Login.CompareTo(LoginBox.Text) == 0 && tmpWorker.Password.CompareTo(PasswordBox.Text) == 0
+                where tmpWorker.Login.CompareTo(LoginBox.Text) == 0 && tmpWorker.Password.CompareTo(PasswordBox.Password) == 0
                 select tmpWorker
                       ).ToList();
             if(tmp.Count > 0)
@@ -107,6 +107,17 @@ namespace WpfApp1
             {
                 MessageBox.Show("Неверный логин или пароль!");
             }
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            
+        }
+
+        private void Image_MouseEnter(object sender, MouseEventArgs e)
+        {
+            if(!String.IsNullOrWhiteSpace(PasswordBox.Password))
+            ShowPassText.Text = PasswordBox.Password;
         }
     }
 }

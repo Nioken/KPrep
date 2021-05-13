@@ -5,18 +5,44 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp1"
         mc:Ignorable="d"
-        Title="Авторизация" Height="196.5" Width="324" Loaded="Window_Loaded">
+        Title="Авторизация" Height="196.5" Width="307.624" Loaded="Window_Loaded">
+    <Window.Resources>
+        <Style x:Key="ButtonStyle" TargetType="Button">
+            <Setter Property="BorderBrush">
+                <Setter.Value>
+                    <SolidColorBrush Color="#fa0416"/>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="0.8" CornerRadius="3">
+                            <Border.Effect>
+                                <DropShadowEffect Color="#FF72FFE5" ShadowDepth="0"/>
+                            </Border.Effect>
+                            <TextBlock Foreground="{TemplateBinding BorderBrush}" Text="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
     <Grid>
         <StackPanel Margin="10" Orientation="Vertical">
             <WrapPanel>
-                <Label Content="Логин:" Margin="80,30,0,0"/>
-                <TextBox x:Name="LoginBox" Height="20" Width="100" Margin="0,30,0,0"/>
+                <Label Content="Логин:" Margin="60,30,0,0"/>
+                <TextBox x:Name="LoginBox" Height="20" Width="100" Margin="0,30,0,0" BorderBrush="Black" />
             </WrapPanel>
             <WrapPanel>
-                <Label Content="Пароль:" Margin="71,3,0,0"/>
-                <TextBox x:Name="PasswordBox" Height="20" Width="100" Margin="0,3,0,0"/>
+                <Label Content="Пароль:" Margin="52,3,0,0"/>
+                <PasswordBox x:Name="PasswordBox" Height="20" Width="100" Margin="0,3,0,0" BorderBrush="Black"/>
+                <Image Source="pack://application:,,,/Assets/Images/ShowPass.png" Height="20" Margin="3,3,0,0" MouseEnter="Image_MouseEnter">
+                    <Image.ToolTip>
+                        <TextBlock x:Name="ShowPassText"/>
+                    </Image.ToolTip>
+                </Image>
             </WrapPanel>
-            <Button x:Name="LoginButton" Height="20" Width="100" Content="Войти" Margin="0,5,0,0" Click="LoginButton_Click"/>
+            <Button x:Name="LoginButton" Height="31" Content="Войти" Margin="70,20,57,0" Click="LoginButton_Click" Style="{StaticResource ButtonStyle}"/>
         </StackPanel>
     </Grid>
 </Window>

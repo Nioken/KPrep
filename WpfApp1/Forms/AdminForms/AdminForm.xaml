@@ -20,6 +20,10 @@
         </WrapPanel>
         <StackPanel Margin="0,60,0,0">
             <DataGrid Height="250" Margin="10,20,10,0" x:Name="WorkersGrid" AutoGenerateColumns="True" IsReadOnly="True" Background="#FFC7BDBD" Foreground="#FF231E20" Opacity="0.9" HorizontalGridLinesBrush="#FF3C3939" VerticalGridLinesBrush="#FF3C3939" CanUserResizeRows="False" BorderBrush="White"/>
+        <WrapPanel>
+            <TextBox x:Name="SearchBox" Width="200" Height="20" Margin="11,10,0,0" TextChanged="TextBox_TextChanged" GotFocus="SearchBox_GotFocus" LostFocus="SearchBox_LostFocus"/>
+            <Image Source="pack://application:,,,/Assets/Images/Search.png" Height="20" Margin="3,10,0,0"/>
+        </WrapPanel>
         </StackPanel>
     </Grid>
 </Window>

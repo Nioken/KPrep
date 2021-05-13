@@ -6,6 +6,46 @@
         xmlns:local="clr-namespace:WpfApp1.Forms.RegistratorForms"
         mc:Ignorable="d"
         Title="Новый клиент" Height="304" Width="332" Loaded="Window_Loaded">
+    <Window.Resources>
+        <Style x:Key="ButtonStyleGreen" TargetType="Button">
+            <Setter Property="BorderBrush">
+                <Setter.Value>
+                    <SolidColorBrush Color="Green"/>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="0.8" CornerRadius="3">
+                            <Border.Effect>
+                                <DropShadowEffect Color="#FF72FFE5" ShadowDepth="0"/>
+                            </Border.Effect>
+                            <TextBlock Foreground="{TemplateBinding BorderBrush}" Text="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="ButtonStyleRed" TargetType="Button">
+            <Setter Property="BorderBrush">
+                <Setter.Value>
+                    <SolidColorBrush Color="Red"/>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="0.8" CornerRadius="3">
+                            <Border.Effect>
+                                <DropShadowEffect Color="#FF72FFE5" ShadowDepth="0"/>
+                            </Border.Effect>
+                            <TextBlock Foreground="{TemplateBinding BorderBrush}" Text="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
     <Grid>
         <StackPanel>
             <WrapPanel Margin="80,10,0,0">
@@ -22,7 +62,7 @@
             </WrapPanel>
             <WrapPanel Margin="19,0,0,0">
                 <Label Content="Дата рождения: "/>
-                <DatePicker x:Name="ClientDatePicker"/>
+                <DatePicker x:Name="ClientDatePicker" Width="149"/>
             </WrapPanel>
             <WrapPanel Margin="70,0,0,0">
                 <Label Content="Адрес: "/>
@@ -38,8 +78,8 @@
                 <RadioButton x:Name="FemaleRadio" Content="Ж" VerticalAlignment="Center" Margin="5,0,0,0"/>
             </WrapPanel>
             <WrapPanel>
-                <Button Content="Добавить" x:Name="AddButton" Margin="80,30,0,0" Click="AddButton_Click" Loaded="AddButton_Loaded"/>
-                <Button Content="Отмена" Margin="60,30,0,0" Click="Button_Click"/>
+                <Button Content="Добавить" x:Name="AddButton" Margin="80,30,0,0" Click="AddButton_Click" Loaded="AddButton_Loaded" Style="{StaticResource ButtonStyleGreen}" Width="61" Height="22"/>
+                <Button Content="Отмена" Margin="60,30,0,0" Click="Button_Click" Style="{StaticResource ButtonStyleRed}" Width="49" Height="24"/>
             </WrapPanel>
         </StackPanel>
     </Grid>
