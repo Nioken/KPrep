@@ -5,14 +5,19 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp1.Forms.DoctorForms" xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
-        Title="ResultForm" Height="400.276" Width="527.762">
+        Title="ResultForm" Height="635.536" Width="843.3" Loaded="Window_Loaded">
     <Grid>
         <StackPanel Margin="10">
-            <Label x:Name="InfoLabel" FontSize="24" Content="Text"/>
+            <Label x:Name="InfoLabel" FontSize="16" Content="Text"/>
             <Label x:Name="ResLabel" Content="Результат:" FontSize="14"/>
-            <RichTextBox x:Name="ResultBox" Height="220"/>
+            <xctk:RichTextBox x:Name="ResultBox" Height="494">
+                <xctk:RichTextBoxFormatBarManager.FormatBar>
+                    <xctk:RichTextBoxFormatBar/>
+                </xctk:RichTextBoxFormatBarManager.FormatBar>
+            </xctk:RichTextBox>
             <WrapPanel>
                 <Button Content="Сохранить" Margin="0,5,0,0" Click="Button_Click"/>
+
             </WrapPanel>
         </StackPanel>
     </Grid>
