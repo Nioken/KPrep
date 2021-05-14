@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Office.Interop.Excel;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -17,13 +18,15 @@ using System.Windows.Shapes;
 using WFAEntity.API;
 using WpfApp1.Classes;
 using WpfApp1.Forms;
+using Excel = Microsoft.Office.Interop.Excel;
+
 
 namespace WpfApp1
 {
     /// <summary>
     /// Логика взаимодействия для AdminForm.xaml
     /// </summary>
-    public partial class AdminForm : Window
+    public partial class AdminForm : System.Windows.Window
     {
         public void UpdateGrid()
         {
@@ -171,5 +174,46 @@ namespace WpfApp1
         {
             SearchBox.Text = "Поиск по ФИО";
         }
+        public void exportToXls()
+        {
+            Excel._Application exApp = new Excel.Application();
+            exApp.Workbooks.Add();
+            Worksheet workSheet = (Worksheet)exApp.ActiveSheet;
+            workSheet.Cells[1].EntireRow.Font.Bold = true;
+            workSheet.Cells.EntireRow.Font.Size = 14;
+            workSheet.Cells.EntireRow.Font.Name = "Arial";
+            workSheet.Cells[1, 1] = "Фамилия";
+            workSheet.Cells[1, 2] = "Имя";
+            workSheet.Cells[1, 3] = "Отчество";
+            workSheet.Cells[1, 4] = "Должность";
+            workSheet.Cells[1, 5] = "Дата рождения";
+            workSheet.Cells[1, 6] = "Стаж";
+            workSheet.Cells[1, 7] = "Телефон";
+            workSheet.Cells[1, 8] = "Логин";
+            workSheet.Cells[1, 9] = "Пароль";
+            int i = 2;
+
+            foreach (Worker worker in MyDBContext.DBContext.Workers.ToList())
+            {
+                workSheet.Cells[i, 1] = worker.Surname;
+                workSheet.Cells[i, 2] = worker.Name;
+                workSheet.Cells[i, 3] = worker.Lastname;
+                workSheet.Cells[i, 4] = worker.Specialize;
+                workSheet.Cells[i, 5] = worker.Birthday.ToShortDateString();
+                workSheet.Cells[i, 6] = worker.Expirience;
+                workSheet.Cells[i, 7] = worker.Phone;
+                workSheet.Cells[i, 8] = worker.Login;
+                workSheet.Cells[i, 9] = worker.Password;
+                i++;
+            }
+            string pathToXlsFile = Environment.CurrentDirectory + "\\WorkersReport.xls";
+            workSheet.SaveAs(pathToXlsFile);
+            exApp.Quit();
+        }
+        private void Button_Click_3(object sender, RoutedEventArgs e)
+        {
+            exportToXls();
+        }
     }
+
 }

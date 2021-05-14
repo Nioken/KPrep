@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp1.Forms.RegistratorForms"
         mc:Ignorable="d"
-        Title="Новый клиент" Height="304" Width="332" Loaded="Window_Loaded">
+        Title="Новый клиент" Height="304" Width="332" Loaded="Window_Loaded" Icon="/WpfApp1;component/Assets/Images/icon2.png">
     <Window.Resources>
         <Style x:Key="ButtonStyleGreen" TargetType="Button">
             <Setter Property="BorderBrush">

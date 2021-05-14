@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp1.Forms.DoctorForms"
         mc:Ignorable="d"
-        Title="DoctorMain" Height="338.122" Width="611.05" Loaded="Window_Loaded">
+        Title="DoctorMain" Height="361.668" Width="611.05" Loaded="Window_Loaded" Icon="/WpfApp1;component/Assets/Images/icon2.png">
     <Grid>
         <StackPanel>
             <WrapPanel>
@@ -14,6 +14,11 @@
             </WrapPanel>
             <DataGrid Margin="10" Height="235" x:Name="ClientsGrid" MouseDoubleClick="ClientsGrid_MouseDoubleClick">
             </DataGrid>
+            <WrapPanel>
+                <TextBox x:Name="SearchBox" Width="200" Height="20" Margin="11,10,0,0" TextChanged="TextBox_TextChanged" GotFocus="SearchBox_GotFocus" LostFocus="SearchBox_LostFocus"/>
+                <Image Source="pack://application:,,,/Assets/Images/Search.png" Height="20" Margin="3,10,0,0"/>
+                <Button Content="Сформировать отчет" Margin="40,10,0,0" Height="22" Click="Button_Click_3"/>
+            </WrapPanel>
         </StackPanel>
     </Grid>
 </Window>

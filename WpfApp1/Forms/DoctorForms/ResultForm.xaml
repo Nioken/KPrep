@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp1.Forms.DoctorForms" xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
-        Title="ResultForm" Height="635.536" Width="843.3" Loaded="Window_Loaded">
+        Title="ResultForm" Height="635.536" Width="843.3" Loaded="Window_Loaded" Icon="/WpfApp1;component/Assets/Images/icon2.png">
     <Grid>
         <StackPanel Margin="10">
             <Label x:Name="InfoLabel" FontSize="16" Content="Text"/>

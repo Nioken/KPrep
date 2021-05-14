@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp1"
         mc:Ignorable="d"
-        Title="Авторизация" Height="196.5" Width="307.624" Loaded="Window_Loaded">
+        Title="Авторизация" Height="196.5" Width="307.624" Loaded="Window_Loaded" Icon="/WpfApp1;component/Assets/Images/icon2.png">
     <Window.Resources>
         <Style x:Key="ButtonStyle" TargetType="Button">
             <Setter Property="BorderBrush">

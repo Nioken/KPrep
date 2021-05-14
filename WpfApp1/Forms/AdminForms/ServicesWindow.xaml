@@ -5,9 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp1.Forms"
         mc:Ignorable="d"
-        Title="Платные услуги" Height="375.414" Width="439.503" Loaded="Window_Loaded">
+        Title="Платные услуги" Height="375.414" Width="439.503" Loaded="Window_Loaded" Icon="/WpfApp1;component/Assets/Images/icon2.png">
     <Grid>
-        <StackPanel>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="185*"/>
+            <ColumnDefinition Width="247*"/>
+        </Grid.ColumnDefinitions>
+        <StackPanel Grid.ColumnSpan="2">
             <WrapPanel>
                 <Button Content="Добавить" Margin="10,10,0,0" Click="Button_Click"/>
                 <Button Content="Удалить" Margin="10,10,0,0" Click="Button_Click_1"/>

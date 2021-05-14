@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp1.Forms"
         mc:Ignorable="d"
-        Title="Новая услуга" Height="162.979" Width="271.42" Loaded="Window_Loaded">
+        Title="Новая услуга" Height="162.979" Width="271.42" Loaded="Window_Loaded" Icon="/WpfApp1;component/Assets/Images/icon2.png">
     <Window.Resources>
         <Style x:Key="ButtonStyleGreen" TargetType="Button">
             <Setter Property="BorderBrush">
@@ -56,13 +56,13 @@
                 <Label Content="Цена: "/>
                 <TextBox x:Name="PriceBox" Width="130" Height="20"/>
             </WrapPanel>
-            <WrapPanel Margin="2,0,0,0">
+            <WrapPanel Margin="50,0,0,0">
                 <Label Content="Врач: "/>
                 <ComboBox x:Name="DoctorsCombo" SelectedIndex="1"/>
             </WrapPanel>
             <WrapPanel>
-                <Button Content="Добавить" x:Name="AddButton" Margin="30,10,0,0" Click="Button_Click" Style="{StaticResource }"/>
-                <Button Content="Отмена" Margin="50,10,0,0" Click="Button_Click_1"/>
+                <Button Content="Добавить" x:Name="AddButton" Margin="55,10,0,0" Click="Button_Click" Style="{StaticResource ButtonStyleGreen}"/>
+                <Button Content="Отмена" Margin="50,10,0,0" Click="Button_Click_1" Style="{StaticResource ButtonStyleRed}"/>
             </WrapPanel>
         </StackPanel>
     </Grid>

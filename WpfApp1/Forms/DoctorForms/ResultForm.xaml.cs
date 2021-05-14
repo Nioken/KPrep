@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,6 +23,7 @@ namespace WpfApp1.Forms.DoctorForms
     /// </summary>
     public partial class ResultForm : Window
     {
+        bool IsEdit = false;
         Ticket SelectedTicket;
         public ResultForm(Ticket SelectedTicket)
         {
@@ -38,16 +40,39 @@ namespace WpfApp1.Forms.DoctorForms
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             //if (!String.IsNullOrWhiteSpace(GetText(ResultBox.Text)))
-            if (!String.IsNullOrWhiteSpace(ResultBox.Text))
+            if (!IsEdit)
             {
-                Result res = new Result();
-                res.ResultID = MyDBContext.DBContext.Results.Count();
-                res.ResultID++;
+                if (!String.IsNullOrWhiteSpace(ResultBox.Text))
+                {
+                    Result res = new Result();
+                    res.ResultID = MyDBContext.DBContext.Results.Count();
+                    res.ResultID++;
 
-                res.ResultText = ResultBox.Text;//res.ResultText = GetText(ResultBox);
-                res.Ticket = SelectedTicket;
-                MyDBContext.DBContext.Results.Add(res);
-                MyDBContext.DBContext.SaveChanges();
+                    res.ResultText = ResultBox.Text;//res.ResultText = GetText(ResultBox);
+                    res.Ticket = SelectedTicket;
+                    MyDBContext.DBContext.Results.Add(res);
+                    MyDBContext.DBContext.SaveChanges();
+                    this.Close();
+                }
+            }
+            else
+            {
+                var Results = MyDBContext.DBContext.Results.ToList();
+                for (int i = 0; i < Results.Count(); i++)
+                {
+                    if (Results[i].Ticket == SelectedTicket)
+                    {
+                        Result res = new Result();
+                        res.ResultID = Results[i].ResultID;
+
+                        res.ResultText = ResultBox.Text;//res.ResultText = GetText(ResultBox);
+                        res.Ticket = SelectedTicket;
+                        Results[i] = res;
+                        MyDBContext.DBContext.Results.AddOrUpdate(Results[i]);
+                        MyDBContext.DBContext.SaveChanges();
+                        break;
+                    }
+                }
                 this.Close();
             }
         }
@@ -60,6 +85,7 @@ namespace WpfApp1.Forms.DoctorForms
                 if(Results[i].Ticket == SelectedTicket)
                 {
                     ResultBox.Text = Results[i].ResultText;
+                    IsEdit = true;
                     break;
                 }
             }
