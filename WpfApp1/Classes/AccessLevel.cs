@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -13,6 +14,7 @@ namespace WpfApp1.Classes
         public int AccessLevelID { get; set; }
         [Required]
         public int Level { get; set; }
+        [JsonIgnore]
         public virtual ICollection<Worker> Workers { get; set; }
     }
 }

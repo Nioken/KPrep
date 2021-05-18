@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using WFAEntity.API;
 using WpfApp1.Classes;
+using WpfApp1.Forms.AdminForms;
 using WpfApp1.Forms.DoctorForms;
 using WpfApp1.Forms.RegistratorForms;
 
@@ -118,6 +119,12 @@ namespace WpfApp1
         {
             if(!String.IsNullOrWhiteSpace(PasswordBox.Password))
             ShowPassText.Text = PasswordBox.Password;
+        }
+
+        private void Image_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            AdminConfirmForm ACF = new AdminConfirmForm();
+            ACF.ShowDialog();
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -31,7 +32,9 @@ namespace WpfApp1.Classes
         public string Password { get; set; }
         //[Required]
         //public int AccessILevelD { get; set; }
+        [JsonIgnore]
         public virtual ICollection<PaidServices> workerID { get; set; }
+        [JsonIgnore]
         [Required]
         public virtual AccessLevel AccessLevel { get; set; }
     }

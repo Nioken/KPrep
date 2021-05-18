@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -25,6 +26,7 @@ namespace WpfApp1.Classes
         public string Phone { get; set; }
         [Required]
         public string Gender { get; set; }
+        [JsonIgnore]
         public virtual ICollection<Ticket> Tickets { get; set; }
     }
 }

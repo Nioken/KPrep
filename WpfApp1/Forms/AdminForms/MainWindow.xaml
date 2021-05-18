@@ -30,8 +30,11 @@
     <Grid>
         <StackPanel Margin="10" Orientation="Vertical">
             <WrapPanel>
-                <Label Content="Логин:" Margin="60,30,0,0"/>
-                <TextBox x:Name="LoginBox" Height="20" Width="100" Margin="0,30,0,0" BorderBrush="Black" />
+                <Image Source="/WpfApp1;component/Assets/Images/BDConfig.png" Height="20" HorizontalAlignment="Left" Margin="250,0,0,0" MouseLeftButtonDown="Image_MouseLeftButtonDown"/>
+            </WrapPanel>
+            <WrapPanel>
+                <Label Content="Логин:" Margin="60,10,0,0"/>
+                <TextBox x:Name="LoginBox" Height="20" Width="100" Margin="0,10,0,0" BorderBrush="Black" />
             </WrapPanel>
             <WrapPanel>
                 <Label Content="Пароль:" Margin="52,3,0,0"/>

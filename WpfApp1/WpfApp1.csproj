@@ -46,6 +46,9 @@
       <EmbedInteropTypes>True</EmbedInteropTypes>
       <HintPath>..\packages\ExelDll\dll\Microsoft.Office.Interop.Excel.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
@@ -86,7 +89,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Forms\AdminForms\AdminConfirmForm.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Forms\AdminForms\AdminForm.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Forms\AdminForms\BDConfigForm.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -96,6 +107,9 @@
     </Page>
     <Compile Include="Forms\AdminForms\AddService.xaml.cs">
       <DependentUpon>AddService.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\AdminForms\AdminConfirmForm.xaml.cs">
+      <DependentUpon>AdminConfirmForm.xaml</DependentUpon>
     </Compile>
     <Compile Include="Forms\AdminForms\AdminForm.xaml.cs">
       <DependentUpon>AdminForm.xaml</DependentUpon>
@@ -110,6 +124,9 @@
     <Compile Include="Classes\Result.cs" />
     <Compile Include="Classes\Ticket.cs" />
     <Compile Include="Classes\Worker.cs" />
+    <Compile Include="Forms\AdminForms\BDConfigForm.xaml.cs">
+      <DependentUpon>BDConfigForm.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Forms\AdminForms\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -214,6 +231,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\Images\icon2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\BDConfig.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
