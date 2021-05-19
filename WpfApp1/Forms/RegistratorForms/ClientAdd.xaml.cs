@@ -41,56 +41,63 @@ namespace WpfApp1.Forms.RegistratorForms
 
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
-            if (!isEdit)
+            try
             {
-                if (!String.IsNullOrWhiteSpace(NameBox.Text) && !String.IsNullOrWhiteSpace(SurnameBox.Text) &&
-                    !String.IsNullOrWhiteSpace(LastNameBox.Text) && !String.IsNullOrWhiteSpace(AdressBox.Text) &&
-                    ClientDatePicker.SelectedDate != null && !String.IsNullOrWhiteSpace(PhoneBox.Text))
+                if (!isEdit)
                 {
-                    Client client = new Client();
-                    client.ClientID = MyDBContext.DBContext.Clients.Count();
-                    client.ClientID++;
-                    client.Name = NameBox.Text;
-                    client.Surname = SurnameBox.Text;
-                    client.Lastname = LastNameBox.Text;
-                    client.Adress = AdressBox.Text;
-                    client.Birthday = (DateTime)ClientDatePicker.SelectedDate;
-                    client.Phone = PhoneBox.Text;
-                    if ((bool)MaleRadio.IsChecked)
+                    if (!String.IsNullOrWhiteSpace(NameBox.Text) && !String.IsNullOrWhiteSpace(SurnameBox.Text) &&
+                        !String.IsNullOrWhiteSpace(LastNameBox.Text) && !String.IsNullOrWhiteSpace(AdressBox.Text) &&
+                        ClientDatePicker.SelectedDate != null && !String.IsNullOrWhiteSpace(PhoneBox.Text))
                     {
-                        client.Gender = "Мужской";
+                        Client client = new Client();
+                        client.ClientID = MyDBContext.DBContext.Clients.Count();
+                        client.ClientID++;
+                        client.Name = NameBox.Text;
+                        client.Surname = SurnameBox.Text;
+                        client.Lastname = LastNameBox.Text;
+                        client.Adress = AdressBox.Text;
+                        client.Birthday = (DateTime)ClientDatePicker.SelectedDate;
+                        client.Phone = PhoneBox.Text;
+                        if ((bool)MaleRadio.IsChecked)
+                        {
+                            client.Gender = "Мужской";
+                        }
+                        else
+                        {
+                            client.Gender = "Женский";
+                        }
+                        MyDBContext.DBContext.Clients.Add(client);
+                        MyDBContext.DBContext.SaveChanges();
+                        RW.UpdateGrid();
                     }
                     else
                     {
-                        client.Gender = "Женский";
+                        MessageBox.Show("Заполните все поля!");
                     }
-                    MyDBContext.DBContext.Clients.Add(client);
-                    MyDBContext.DBContext.SaveChanges();
+                }
+                else
+                {
+                    EditClient.Name = NameBox.Text;
+                    EditClient.Surname = SurnameBox.Text;
+                    EditClient.Lastname = LastNameBox.Text;
+                    EditClient.Adress = AdressBox.Text;
+                    EditClient.Phone = PhoneBox.Text;
+                    EditClient.Birthday = (DateTime)ClientDatePicker.SelectedDate;
+                    if (MaleRadio.IsChecked == true)
+                    {
+                        EditClient.Gender = "Мужской";
+                    }
+                    else
+                    {
+                        EditClient.Gender = "Женский";
+                    }
+                    MyDBContext.DBContext.Clients.AddOrUpdate(EditClient);
                     RW.UpdateGrid();
                 }
-                else
-                {
-                    MessageBox.Show("Заполните все поля!");
-                }
             }
-            else
+            catch (System.Exception ex)
             {
-                EditClient.Name = NameBox.Text;
-                EditClient.Surname = SurnameBox.Text;
-                EditClient.Lastname = LastNameBox.Text;
-                EditClient.Adress = AdressBox.Text;
-                EditClient.Phone = PhoneBox.Text;
-                EditClient.Birthday = (DateTime)ClientDatePicker.SelectedDate;
-                if (MaleRadio.IsChecked == true)
-                {
-                    EditClient.Gender = "Мужской";
-                }
-                else
-                {
-                    EditClient.Gender = "Женский";
-                }
-                MyDBContext.DBContext.Clients.AddOrUpdate(EditClient);
-                RW.UpdateGrid();
+                MessageBox.Show(ex.Message);
             }
         }
 

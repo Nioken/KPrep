@@ -45,88 +45,95 @@ namespace WpfApp1.Forms
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            if (!IsEdit)
+            try
             {
-                if (!String.IsNullOrWhiteSpace(NameBox.Text) && !String.IsNullOrWhiteSpace(SurnameBox.Text) && !String.IsNullOrWhiteSpace(LastNameBox.Text)
-                    && WorkerDatePicker.SelectedDate != null && !String.IsNullOrWhiteSpace(ExpBox.Text) && !String.IsNullOrWhiteSpace(SpecializeBox.Text)
-                    && !String.IsNullOrWhiteSpace(PhoneBox.Text) && !String.IsNullOrWhiteSpace(LoginBox.Text) && !String.IsNullOrWhiteSpace(PasswordBox.Text))
+                if (!IsEdit)
                 {
-                    Worker WorkerObj = new Worker();
-                    int Temp = MyDBContext.DBContext.AccessLevels.Count();
-                    WorkerObj.WorkerID = Temp++;
-                    WorkerObj.Name = NameBox.Text;
-                    WorkerObj.Surname = SurnameBox.Text;
-                    WorkerObj.Lastname = LastNameBox.Text;
-                    WorkerObj.Expirience = Convert.ToInt32(ExpBox.Text);
-                    WorkerObj.Birthday = (DateTime)WorkerDatePicker.SelectedDate;
-                    WorkerObj.Specialize = SpecializeBox.Text;
-                    WorkerObj.Phone = PhoneBox.Text;
-                    WorkerObj.Login = LoginBox.Text;
-                    WorkerObj.Password = PasswordBox.Text;
-                    //WorkerObj.AccessILevelD = 1;
+                    if (!String.IsNullOrWhiteSpace(NameBox.Text) && !String.IsNullOrWhiteSpace(SurnameBox.Text) && !String.IsNullOrWhiteSpace(LastNameBox.Text)
+                        && WorkerDatePicker.SelectedDate != null && !String.IsNullOrWhiteSpace(ExpBox.Text) && !String.IsNullOrWhiteSpace(SpecializeBox.Text)
+                        && !String.IsNullOrWhiteSpace(PhoneBox.Text) && !String.IsNullOrWhiteSpace(LoginBox.Text) && !String.IsNullOrWhiteSpace(PasswordBox.Text))
+                    {
+                        Worker WorkerObj = new Worker();
+                        int Temp = MyDBContext.DBContext.AccessLevels.Count();
+                        WorkerObj.WorkerID = Temp++;
+                        WorkerObj.Name = NameBox.Text;
+                        WorkerObj.Surname = SurnameBox.Text;
+                        WorkerObj.Lastname = LastNameBox.Text;
+                        WorkerObj.Expirience = Convert.ToInt32(ExpBox.Text);
+                        WorkerObj.Birthday = (DateTime)WorkerDatePicker.SelectedDate;
+                        WorkerObj.Specialize = SpecializeBox.Text;
+                        WorkerObj.Phone = PhoneBox.Text;
+                        WorkerObj.Login = LoginBox.Text;
+                        WorkerObj.Password = PasswordBox.Text;
+                        //WorkerObj.AccessILevelD = 1;
+                        var tmp = (
+                            from tmpAccesLevels in MyDBContext.DBContext.AccessLevels.ToList<AccessLevel>()
+                            select tmpAccesLevels
+                            ).ToList();
+                        if (AccessCombo.SelectedIndex == 1)
+                        {
+                            WorkerObj.AccessLevel = tmp[1];
+                        }
+                        if (AccessCombo.SelectedIndex == 0)
+                        {
+                            WorkerObj.AccessLevel = tmp[0];
+                        }
+                        if (AccessCombo.SelectedIndex == 2)
+                        {
+                            WorkerObj.AccessLevel = tmp[2];
+                        }
+                        MyDBContext.DBContext.Workers.Add(WorkerObj);
+                        NameBox.Text = String.Empty;
+                        SurnameBox.Text = String.Empty;
+                        LastNameBox.Text = String.Empty;
+                        SpecializeBox.Text = String.Empty;
+                        ExpBox.Text = String.Empty;
+                        PhoneBox.Text = String.Empty;
+                        LoginBox.Text = String.Empty;
+                        PasswordBox.Text = String.Empty;
+                        MyDBContext.DBContext.SaveChanges();
+                        AF.UpdateGrid();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Заполните все данные!");
+                    }
+                }
+                else
+                {
+                    EditWorker.Name = NameBox.Text;
+                    EditWorker.Surname = SurnameBox.Text;
+                    EditWorker.Lastname = LastNameBox.Text;
+                    EditWorker.Expirience = Convert.ToInt32(ExpBox.Text);
+                    EditWorker.Specialize = SpecializeBox.Text;
+                    EditWorker.Phone = PhoneBox.Text;
+                    EditWorker.Login = LoginBox.Text;
+                    EditWorker.Password = PasswordBox.Text;
+                    EditWorker.Birthday = (DateTime)WorkerDatePicker.SelectedDate;
                     var tmp = (
                         from tmpAccesLevels in MyDBContext.DBContext.AccessLevels.ToList<AccessLevel>()
                         select tmpAccesLevels
                         ).ToList();
                     if (AccessCombo.SelectedIndex == 1)
                     {
-                        WorkerObj.AccessLevel = tmp[1];
+                        EditWorker.AccessLevel = tmp[1];
                     }
                     if (AccessCombo.SelectedIndex == 0)
                     {
-                        WorkerObj.AccessLevel = tmp[0];
+                        EditWorker.AccessLevel = tmp[0];
                     }
                     if (AccessCombo.SelectedIndex == 2)
                     {
-                        WorkerObj.AccessLevel = tmp[2];
+                        EditWorker.AccessLevel = tmp[2];
                     }
-                    MyDBContext.DBContext.Workers.Add(WorkerObj);
-                    NameBox.Text = String.Empty;
-                    SurnameBox.Text = String.Empty;
-                    LastNameBox.Text = String.Empty;
-                    SpecializeBox.Text = String.Empty;
-                    ExpBox.Text = String.Empty;
-                    PhoneBox.Text = String.Empty;
-                    LoginBox.Text = String.Empty;
-                    PasswordBox.Text = String.Empty;
+                    MyDBContext.DBContext.Workers.AddOrUpdate(EditWorker);
                     MyDBContext.DBContext.SaveChanges();
                     AF.UpdateGrid();
                 }
-                else
-                {
-                    MessageBox.Show("Заполните все данные!");
-                }
             }
-            else
+            catch (System.Exception ex)
             {
-                EditWorker.Name = NameBox.Text;
-                EditWorker.Surname = SurnameBox.Text;
-                EditWorker.Lastname = LastNameBox.Text;
-                EditWorker.Expirience = Convert.ToInt32(ExpBox.Text);
-                EditWorker.Specialize = SpecializeBox.Text;
-                EditWorker.Phone = PhoneBox.Text;
-                EditWorker.Login = LoginBox.Text;
-                EditWorker.Password = PasswordBox.Text;
-                EditWorker.Birthday = (DateTime)WorkerDatePicker.SelectedDate;
-                var tmp = (
-                    from tmpAccesLevels in MyDBContext.DBContext.AccessLevels.ToList<AccessLevel>()
-                    select tmpAccesLevels
-                    ).ToList();
-                if (AccessCombo.SelectedIndex == 1)
-                {
-                    EditWorker.AccessLevel = tmp[1];
-                }
-                if (AccessCombo.SelectedIndex == 0)
-                {
-                    EditWorker.AccessLevel = tmp[0];
-                }
-                if (AccessCombo.SelectedIndex == 2)
-                {
-                    EditWorker.AccessLevel = tmp[2];
-                }
-                MyDBContext.DBContext.Workers.AddOrUpdate(EditWorker);
-                MyDBContext.DBContext.SaveChanges();
-                AF.UpdateGrid();
+                MessageBox.Show(ex.Message);
             }
         }
 

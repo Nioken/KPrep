@@ -39,41 +39,48 @@ namespace WpfApp1.Forms.DoctorForms
         //}
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            //if (!String.IsNullOrWhiteSpace(GetText(ResultBox.Text)))
-            if (!IsEdit)
+            try
             {
-                if (!String.IsNullOrWhiteSpace(ResultBox.Text))
+                //if (!String.IsNullOrWhiteSpace(GetText(ResultBox.Text)))
+                if (!IsEdit)
                 {
-                    Result res = new Result();
-                    res.ResultID = MyDBContext.DBContext.Results.Count();
-                    res.ResultID++;
-
-                    res.ResultText = ResultBox.Text;//res.ResultText = GetText(ResultBox);
-                    res.Ticket = SelectedTicket;
-                    MyDBContext.DBContext.Results.Add(res);
-                    MyDBContext.DBContext.SaveChanges();
-                    this.Close();
-                }
-            }
-            else
-            {
-                var Results = MyDBContext.DBContext.Results.ToList();
-                for (int i = 0; i < Results.Count(); i++)
-                {
-                    if (Results[i].Ticket == SelectedTicket)
+                    if (!String.IsNullOrWhiteSpace(ResultBox.Text))
                     {
                         Result res = new Result();
-                        res.ResultID = Results[i].ResultID;
+                        res.ResultID = MyDBContext.DBContext.Results.Count();
+                        res.ResultID++;
 
                         res.ResultText = ResultBox.Text;//res.ResultText = GetText(ResultBox);
                         res.Ticket = SelectedTicket;
-                        Results[i] = res;
-                        MyDBContext.DBContext.Results.AddOrUpdate(Results[i]);
+                        MyDBContext.DBContext.Results.Add(res);
                         MyDBContext.DBContext.SaveChanges();
-                        break;
+                        this.Close();
                     }
                 }
-                this.Close();
+                else
+                {
+                    var Results = MyDBContext.DBContext.Results.ToList();
+                    for (int i = 0; i < Results.Count(); i++)
+                    {
+                        if (Results[i].Ticket == SelectedTicket)
+                        {
+                            Result res = new Result();
+                            res.ResultID = Results[i].ResultID;
+
+                            res.ResultText = ResultBox.Text;//res.ResultText = GetText(ResultBox);
+                            res.Ticket = SelectedTicket;
+                            Results[i] = res;
+                            MyDBContext.DBContext.Results.AddOrUpdate(Results[i]);
+                            MyDBContext.DBContext.SaveChanges();
+                            break;
+                        }
+                    }
+                    this.Close();
+                }
+            }
+            catch (System.Exception ex)
+            {
+                MessageBox.Show(ex.Message);
             }
         }
 

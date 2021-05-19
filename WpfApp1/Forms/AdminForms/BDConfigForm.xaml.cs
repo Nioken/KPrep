@@ -108,163 +108,176 @@ namespace WpfApp1.Forms.AdminForms
         }
         public void ExportData()
         {
-
-            Dispatcher.Invoke((Action)(()=>ChangeProgress(0)));
-            Microsoft.Win32.SaveFileDialog fileDialog = new Microsoft.Win32.SaveFileDialog();
-            var res = (bool)fileDialog.ShowDialog();
-            if (!res) return;
-            string FilePath = fileDialog.FileName;
-            using (StreamWriter file = new StreamWriter(FilePath))
+            try
             {
-                file.Write('[');
-                List<WorkerStruct> Workers = new List<WorkerStruct>();
-                var Wrks = MyDBContext.DBContext.Workers.ToList();
-                for (int i = 0; i < Wrks.Count; i++)
+                Dispatcher.Invoke((Action)(() => ChangeProgress(0)));
+                Microsoft.Win32.SaveFileDialog fileDialog = new Microsoft.Win32.SaveFileDialog();
+                var res = (bool)fileDialog.ShowDialog();
+                if (!res) return;
+                string FilePath = fileDialog.FileName;
+                using (StreamWriter file = new StreamWriter(FilePath))
                 {
-                    Workers.Add(new WorkerStruct(Wrks[i].WorkerID, Wrks[i].Name, Wrks[i].Surname, Wrks[i].Lastname, Wrks[i].Birthday, Wrks[i].Expirience,
-                        Wrks[i].Specialize, Wrks[i].Phone, Wrks[i].Login, Wrks[i].Password, Wrks[i].AccessLevel.AccessLevelID));
+                    file.Write('[');
+                    List<WorkerStruct> Workers = new List<WorkerStruct>();
+                    var Wrks = MyDBContext.DBContext.Workers.ToList();
+                    for (int i = 0; i < Wrks.Count; i++)
+                    {
+                        Workers.Add(new WorkerStruct(Wrks[i].WorkerID, Wrks[i].Name, Wrks[i].Surname, Wrks[i].Lastname, Wrks[i].Birthday, Wrks[i].Expirience,
+                            Wrks[i].Specialize, Wrks[i].Phone, Wrks[i].Login, Wrks[i].Password, Wrks[i].AccessLevel.AccessLevelID));
+                    }
+                    JsonSerializer serializer = new JsonSerializer();
+                    serializer.Serialize(file, MyDBContext.DBContext.AccessLevels.ToList());
+                    file.Write(',');
+                    Dispatcher.Invoke((Action)(() => ChangeProgress(16.3)));
+                    serializer.Serialize(file, Workers);
+                    file.Write(',');
+                    Dispatcher.Invoke((Action)(() => ChangeProgress(32.3)));
+                    serializer.Serialize(file, MyDBContext.DBContext.Clients);
+                    file.Write(',');
+                    Dispatcher.Invoke((Action)(() => ChangeProgress(48.6)));
+                    List<PaidServicesStruct> PaidServicesStructs = new List<PaidServicesStruct>();
+                    var Services = MyDBContext.DBContext.PaidServices.ToList();
+                    for (int i = 0; i < Services.Count; i++)
+                    {
+                        PaidServicesStructs.Add(new PaidServicesStruct(Services[i].ServiceID, Services[i].Name, Services[i].Price, Services[i].Worker.WorkerID));
+                    }
+                    serializer.Serialize(file, PaidServicesStructs);
+                    file.Write(',');
+                    Dispatcher.Invoke((Action)(() => ChangeProgress(64.9)));
+                    List<TicketStruct> ticketStructs = new List<TicketStruct>();
+                    var Tics = MyDBContext.DBContext.Tickets.ToList();
+                    for (int i = 0; i < Tics.Count; i++)
+                    {
+                        ticketStructs.Add(new TicketStruct(Tics[i].TicketID, Tics[i].TicketNumber, Tics[i].WorkDate, Tics[i].WorkTime, Tics[i].Client.ClientID, Tics[i].PaidServices.ServiceID));
+                    }
+                    serializer.Serialize(file, ticketStructs);
+                    file.Write(',');
+                    Dispatcher.Invoke((Action)(() => ChangeProgress(81.2)));
+                    List<ResultStruct> results = new List<ResultStruct>();
+                    var ress = MyDBContext.DBContext.Results.ToList();
+                    for (int i = 0; i < ress.Count; i++)
+                    {
+                        results.Add(new ResultStruct(ress[i].ResultID, ress[i].ResultText, ress[i].Ticket.TicketID));
+                    }
+                    serializer.Serialize(file, results);
+                    file.Write(']');
+                    Dispatcher.Invoke((Action)(() => ChangeProgress(100)));
+                    MessageBox.Show("Экспорт прошел успешно!");
                 }
-                JsonSerializer serializer = new JsonSerializer();
-                serializer.Serialize(file, MyDBContext.DBContext.AccessLevels.ToList());
-                file.Write(',');
-                Dispatcher.Invoke((Action)(() => ChangeProgress(16.3)));
-                serializer.Serialize(file, Workers);
-                file.Write(',');
-                Dispatcher.Invoke((Action)(() => ChangeProgress(32.3)));
-                serializer.Serialize(file, MyDBContext.DBContext.Clients);
-                file.Write(',');
-                Dispatcher.Invoke((Action)(() => ChangeProgress(48.6)));
-                List<PaidServicesStruct> PaidServicesStructs = new List<PaidServicesStruct>();
-                var Services = MyDBContext.DBContext.PaidServices.ToList();
-                for (int i = 0; i < Services.Count; i++)
-                {
-                    PaidServicesStructs.Add(new PaidServicesStruct(Services[i].ServiceID, Services[i].Name, Services[i].Price, Services[i].Worker.WorkerID));
-                }
-                serializer.Serialize(file, PaidServicesStructs);
-                file.Write(',');
-                Dispatcher.Invoke((Action)(() => ChangeProgress(64.9)));
-                List<TicketStruct> ticketStructs = new List<TicketStruct>();
-                var Tics = MyDBContext.DBContext.Tickets.ToList();
-                for (int i = 0; i < Tics.Count; i++)
-                {
-                    ticketStructs.Add(new TicketStruct(Tics[i].TicketID, Tics[i].TicketNumber, Tics[i].WorkDate, Tics[i].WorkTime, Tics[i].Client.ClientID, Tics[i].PaidServices.ServiceID));
-                }
-                serializer.Serialize(file, ticketStructs);
-                file.Write(',');
-                Dispatcher.Invoke((Action)(() => ChangeProgress(81.2)));
-                List<ResultStruct> results = new List<ResultStruct>();
-                var ress = MyDBContext.DBContext.Results.ToList();
-                for (int i = 0; i < ress.Count; i++)
-                {
-                    results.Add(new ResultStruct(ress[i].ResultID, ress[i].ResultText, ress[i].Ticket.TicketID));
-                }
-                serializer.Serialize(file, results);
-                file.Write(']');
-                Dispatcher.Invoke((Action)(() => ChangeProgress(100)));
-                MessageBox.Show("Экспорт прошел успешно!");
+            }
+            catch (System.Exception ex)
+            {
+                MessageBox.Show(ex.Message);
             }
         }
         public void ImportData()
         {
-            Dispatcher.Invoke((Action)(() => ChangeProgress(0)));
-            Microsoft.Win32.OpenFileDialog fileDialog = new Microsoft.Win32.OpenFileDialog();
-            var res = (bool)fileDialog.ShowDialog();
-            if (!res) return;
-            string FilePath = fileDialog.FileName;
-            MyDBContext.DBContext.Database.Delete();
-            MyDBContext.DBContext.Database.Create();
-            using (StreamReader file = new StreamReader(FilePath))
+            try
             {
-                string JSONdata = file.ReadToEnd();
-                JArray JSON = JArray.Parse(JSONdata);
-                dynamic AccessLevelsJson = JSON[0];
-                for(int i = 0; i < AccessLevelsJson.Count; i++)
+                Dispatcher.Invoke((Action)(() => ChangeProgress(0)));
+                Microsoft.Win32.OpenFileDialog fileDialog = new Microsoft.Win32.OpenFileDialog();
+                var res = (bool)fileDialog.ShowDialog();
+                if (!res) return;
+                string FilePath = fileDialog.FileName;
+                MyDBContext.DBContext.Database.Delete();
+                MyDBContext.DBContext.Database.Create();
+                using (StreamReader file = new StreamReader(FilePath))
                 {
-                    AccessLevel al = new AccessLevel();
-                    al.AccessLevelID = AccessLevelsJson[i].AccessLevelID;
-                    al.Level = AccessLevelsJson[i].Level;
-                    MyDBContext.DBContext.AccessLevels.Add(al);
-                    MyDBContext.DBContext.SaveChanges();
+                    string JSONdata = file.ReadToEnd();
+                    JArray JSON = JArray.Parse(JSONdata);
+                    dynamic AccessLevelsJson = JSON[0];
+                    for (int i = 0; i < AccessLevelsJson.Count; i++)
+                    {
+                        AccessLevel al = new AccessLevel();
+                        al.AccessLevelID = AccessLevelsJson[i].AccessLevelID;
+                        al.Level = AccessLevelsJson[i].Level;
+                        MyDBContext.DBContext.AccessLevels.Add(al);
+                        MyDBContext.DBContext.SaveChanges();
+                    }
+                    Dispatcher.Invoke((Action)(() => ChangeProgress(16.3)));
+                    //Workers
+                    dynamic WorkersJSON = JSON[1];
+                    for (int i = 0; i < AccessLevelsJson.Count; i++)
+                    {
+                        Worker worker = new Worker();
+                        worker.WorkerID = WorkersJSON[i].WorkerID;
+                        worker.Name = WorkersJSON[i].Name;
+                        worker.Surname = WorkersJSON[i].Surname;
+                        worker.Lastname = WorkersJSON[i].Lastname;
+                        worker.Birthday = (DateTime)WorkersJSON[i].Birthday;
+                        worker.Expirience = WorkersJSON[i].Expirience;
+                        worker.Specialize = WorkersJSON[i].Specialize;
+                        worker.Phone = WorkersJSON[i].Phone;
+                        worker.Login = WorkersJSON[i].Login;
+                        worker.Password = WorkersJSON[i].Password;
+                        worker.AccessLevel = MyDBContext.DBContext.AccessLevels.Find(Convert.ToInt32(WorkersJSON[i].AccessLevelID));
+                        MyDBContext.DBContext.Workers.Add(worker);
+                        MyDBContext.DBContext.SaveChanges();
+                    }
+                    Dispatcher.Invoke((Action)(() => ChangeProgress(32.3)));
+                    //clients
+                    dynamic ClientsJSON = JSON[1].Next;
+                    for (int i = 0; i < ClientsJSON.Count; i++)
+                    {
+                        Client client = new Client();
+                        client.ClientID = ClientsJSON[i].ClientID;
+                        client.Name = ClientsJSON[i].Name;
+                        client.Surname = ClientsJSON[i].Surname;
+                        client.Lastname = ClientsJSON[i].Lastname;
+                        client.Birthday = (DateTime)ClientsJSON[i].Birthday;
+                        client.Adress = ClientsJSON[i].Adress;
+                        client.Phone = ClientsJSON[i].Phone;
+                        client.Gender = ClientsJSON[i].Gender;
+                        MyDBContext.DBContext.Clients.Add(client);
+                        MyDBContext.DBContext.SaveChanges();
+                    }
+                    Dispatcher.Invoke((Action)(() => ChangeProgress(48.6)));
+                    //Services
+                    dynamic ServicesJSON = JSON[1].Next.Next;
+                    for (int i = 0; i < ServicesJSON.Count; i++)
+                    {
+                        PaidServices Service = new PaidServices();
+                        Service.ServiceID = ServicesJSON[i].ServiceID;
+                        Service.Name = ServicesJSON[i].Name;
+                        Service.Price = ServicesJSON[i].Price;
+                        Service.Worker = MyDBContext.DBContext.Workers.Find(Convert.ToInt32(ServicesJSON[i].WorkerID));
+                        MyDBContext.DBContext.PaidServices.Add(Service);
+                        MyDBContext.DBContext.SaveChanges();
+                    }
+                    Dispatcher.Invoke((Action)(() => ChangeProgress(64.9)));
+                    //Tickets
+                    dynamic TicketsJSON = JSON[1].Next.Next.Next;
+                    for (int i = 0; i < TicketsJSON.Count; i++)
+                    {
+                        Ticket ticket = new Ticket();
+                        ticket.TicketID = TicketsJSON[i].TicketID;
+                        ticket.TicketNumber = TicketsJSON[i].TicketNumber;
+                        ticket.WorkDate = TicketsJSON[i].WorkDate;
+                        ticket.WorkTime = TicketsJSON[i].WorkTime;
+                        ticket.Client = MyDBContext.DBContext.Clients.Find(Convert.ToInt32(TicketsJSON[i].ClientID));
+                        ticket.PaidServices = MyDBContext.DBContext.PaidServices.Find(Convert.ToInt32(TicketsJSON[i].PaidServicesID));
+                        MyDBContext.DBContext.Tickets.Add(ticket);
+                        MyDBContext.DBContext.SaveChanges();
+                    }
+                    Dispatcher.Invoke((Action)(() => ChangeProgress(81.2)));
+                    //Results
+                    dynamic ResultsJSON = JSON[1].Next.Next.Next.Next;
+                    for (int i = 0; i < ResultsJSON.Count; i++)
+                    {
+                        Result result = new Result();
+                        result.ResultID = ResultsJSON[i].ResultID;
+                        result.ResultText = ResultsJSON[i].ResultText;
+                        result.Ticket = MyDBContext.DBContext.Tickets.Find(Convert.ToInt32(ResultsJSON[i].TicketID));
+                        MyDBContext.DBContext.Results.Add(result);
+                        MyDBContext.DBContext.SaveChanges();
+                    }
+                    Dispatcher.Invoke((Action)(() => ChangeProgress(100)));
+                    MessageBox.Show("Импорт прошел успешно!");
                 }
-                Dispatcher.Invoke((Action)(() => ChangeProgress(16.3)));
-                //Workers
-                dynamic WorkersJSON = JSON[1];
-                for (int i = 0; i < AccessLevelsJson.Count; i++)
-                {
-                    Worker worker = new Worker();
-                    worker.WorkerID = WorkersJSON[i].WorkerID;
-                    worker.Name = WorkersJSON[i].Name;
-                    worker.Surname = WorkersJSON[i].Surname;
-                    worker.Lastname = WorkersJSON[i].Lastname;
-                    worker.Birthday = (DateTime)WorkersJSON[i].Birthday;
-                    worker.Expirience = WorkersJSON[i].Expirience;
-                    worker.Specialize = WorkersJSON[i].Specialize;
-                    worker.Phone = WorkersJSON[i].Phone;
-                    worker.Login = WorkersJSON[i].Login;
-                    worker.Password = WorkersJSON[i].Password;
-                    worker.AccessLevel = MyDBContext.DBContext.AccessLevels.Find(Convert.ToInt32(WorkersJSON[i].AccessLevelID));
-                    MyDBContext.DBContext.Workers.Add(worker);
-                    MyDBContext.DBContext.SaveChanges();
-                }
-                Dispatcher.Invoke((Action)(() => ChangeProgress(32.3)));
-                //clients
-                dynamic ClientsJSON = JSON[1].Next;
-                for (int i = 0; i < ClientsJSON.Count; i++)
-                {
-                    Client client = new Client();
-                    client.ClientID = ClientsJSON[i].ClientID;
-                    client.Name = ClientsJSON[i].Name;
-                    client.Surname = ClientsJSON[i].Surname;
-                    client.Lastname = ClientsJSON[i].Lastname;
-                    client.Birthday = (DateTime)ClientsJSON[i].Birthday;
-                    client.Adress = ClientsJSON[i].Adress;
-                    client.Phone = ClientsJSON[i].Phone;
-                    client.Gender = ClientsJSON[i].Gender;
-                    MyDBContext.DBContext.Clients.Add(client);
-                    MyDBContext.DBContext.SaveChanges();
-                }
-                Dispatcher.Invoke((Action)(() => ChangeProgress(48.6)));
-                //Services
-                dynamic ServicesJSON = JSON[1].Next.Next;
-                for (int i = 0; i < ServicesJSON.Count; i++)
-                {
-                    PaidServices Service = new PaidServices();
-                    Service.ServiceID = ServicesJSON[i].ServiceID;
-                    Service.Name = ServicesJSON[i].Name;
-                    Service.Price = ServicesJSON[i].Price;
-                    Service.Worker = MyDBContext.DBContext.Workers.Find(Convert.ToInt32(ServicesJSON[i].WorkerID));
-                    MyDBContext.DBContext.PaidServices.Add(Service);
-                    MyDBContext.DBContext.SaveChanges();
-                }
-                Dispatcher.Invoke((Action)(() => ChangeProgress(64.9)));
-                //Tickets
-                dynamic TicketsJSON = JSON[1].Next.Next.Next;
-                for (int i = 0; i < TicketsJSON.Count; i++)
-                {
-                    Ticket ticket = new Ticket();
-                    ticket.TicketID = TicketsJSON[i].TicketID;
-                    ticket.TicketNumber = TicketsJSON[i].TicketNumber;
-                    ticket.WorkDate = TicketsJSON[i].WorkDate;
-                    ticket.WorkTime = TicketsJSON[i].WorkTime;
-                    ticket.Client = MyDBContext.DBContext.Clients.Find(Convert.ToInt32(TicketsJSON[i].ClientID));
-                    ticket.PaidServices = MyDBContext.DBContext.PaidServices.Find(Convert.ToInt32(TicketsJSON[i].PaidServicesID));
-                    MyDBContext.DBContext.Tickets.Add(ticket);
-                    MyDBContext.DBContext.SaveChanges();
-                }
-                Dispatcher.Invoke((Action)(() => ChangeProgress(81.2)));
-                //Results
-                dynamic ResultsJSON = JSON[1].Next.Next.Next.Next;
-                for (int i = 0; i < ResultsJSON.Count; i++)
-                {
-                    Result result = new Result();
-                    result.ResultID = ResultsJSON[i].ResultID;
-                    result.ResultText = ResultsJSON[i].ResultText;
-                    result.Ticket = MyDBContext.DBContext.Tickets.Find(Convert.ToInt32(ResultsJSON[i].TicketID));
-                    MyDBContext.DBContext.Results.Add(result);
-                    MyDBContext.DBContext.SaveChanges();
-                }
-                Dispatcher.Invoke((Action)(() => ChangeProgress(100)));
-                MessageBox.Show("Импорт прошел успешно!");
+            }
+            catch(System.Exception ex)
+            {
+                MessageBox.Show(ex.Message);
             }
         }
         private void ExportButton_Click(object sender, RoutedEventArgs e)
@@ -284,7 +297,14 @@ namespace WpfApp1.Forms.AdminForms
             var res = MessageBox.Show("Вы действительно хотите удалють всю базу данных?", "Предупреждение", MessageBoxButton.YesNo, MessageBoxImage.Warning);
             if (res == MessageBoxResult.Yes)
             {
-                MyDBContext.DBContext.Database.Delete();
+                try
+                {
+                    MyDBContext.DBContext.Database.Delete();
+                }
+                catch(System.Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
             }
         }
     }

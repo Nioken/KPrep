@@ -48,24 +48,31 @@ namespace WpfApp1.Forms.RegistratorForms
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            if (WorkDatePicker.SelectedDate != null)
+            try
             {
-                Ticket ticket = new Ticket();
-                ticket.TicketID = MyDBContext.DBContext.Tickets.Count();
-                ticket.TicketID++;
-                ticket.Client = SelectedClient;
-                ticket.TicketNumber = ticket.TicketID;
-                ticket.WorkDate = WorkDatePicker.SelectedDate.Value.ToShortDateString();
-                ticket.WorkTime = WorkTimePicker.Text;
-                var tmp = (
-                    from tmpService in MyDBContext.DBContext.PaidServices.ToList<PaidServices>()
-                    where tmpService.Name.CompareTo(ServicesCombo.Text) == 0
-                    select tmpService
-                    ).ToList();
-                ticket.PaidServices = tmp[0];
-                MyDBContext.DBContext.Tickets.Add(ticket);
-                MyDBContext.DBContext.SaveChanges();
-                this.Close();
+                if (WorkDatePicker.SelectedDate != null)
+                {
+                    Ticket ticket = new Ticket();
+                    ticket.TicketID = MyDBContext.DBContext.Tickets.Count();
+                    ticket.TicketID++;
+                    ticket.Client = SelectedClient;
+                    ticket.TicketNumber = ticket.TicketID;
+                    ticket.WorkDate = WorkDatePicker.SelectedDate.Value.ToShortDateString();
+                    ticket.WorkTime = WorkTimePicker.Text;
+                    var tmp = (
+                        from tmpService in MyDBContext.DBContext.PaidServices.ToList<PaidServices>()
+                        where tmpService.Name.CompareTo(ServicesCombo.Text) == 0
+                        select tmpService
+                        ).ToList();
+                    ticket.PaidServices = tmp[0];
+                    MyDBContext.DBContext.Tickets.Add(ticket);
+                    MyDBContext.DBContext.SaveChanges();
+                    this.Close();
+                }
+            }
+            catch (System.Exception ex)
+            {
+                System.Windows.MessageBox.Show(ex.Message);
             }
         }
     }

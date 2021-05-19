@@ -69,35 +69,42 @@ namespace WpfApp1.Forms
         }
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            if (!isEdit)
+            try
             {
-                if (!String.IsNullOrWhiteSpace(NameBox.Text) && !String.IsNullOrWhiteSpace(PriceBox.Text))
+                if (!isEdit)
                 {
-                    PaidServices ps = new PaidServices();
-                    ps.ServiceID = MyDBContext.DBContext.PaidServices.Count();
-                    ps.ServiceID++;
-                    ps.Name = NameBox.Text;
-                    ps.Price = Convert.ToDouble(PriceBox.Text);
-                    ps.Worker = GetNeedWorker(MyDBContext.DBContext.Workers.ToList());
-                    MyDBContext.DBContext.PaidServices.Add(ps);
-                    MyDBContext.DBContext.SaveChanges();
-                    NameBox.Text = String.Empty;
-                    PriceBox.Text = String.Empty;
-                    SW.UpdateGrid();
+                    if (!String.IsNullOrWhiteSpace(NameBox.Text) && !String.IsNullOrWhiteSpace(PriceBox.Text))
+                    {
+                        PaidServices ps = new PaidServices();
+                        ps.ServiceID = MyDBContext.DBContext.PaidServices.Count();
+                        ps.ServiceID++;
+                        ps.Name = NameBox.Text;
+                        ps.Price = Convert.ToDouble(PriceBox.Text);
+                        ps.Worker = GetNeedWorker(MyDBContext.DBContext.Workers.ToList());
+                        MyDBContext.DBContext.PaidServices.Add(ps);
+                        MyDBContext.DBContext.SaveChanges();
+                        NameBox.Text = String.Empty;
+                        PriceBox.Text = String.Empty;
+                        SW.UpdateGrid();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Заполните все поля: ");
+                    }
                 }
                 else
                 {
-                    MessageBox.Show("Заполните все поля: ");
+                    EditService.Price = Convert.ToDouble(PriceBox.Text);
+                    EditService.Name = NameBox.Text;
+                    EditService.Worker = GetNeedWorker(MyDBContext.DBContext.Workers.ToList());
+                    MyDBContext.DBContext.PaidServices.AddOrUpdate(EditService);
+                    MyDBContext.DBContext.SaveChanges();
+                    SW.UpdateGrid();
                 }
             }
-            else
+            catch (System.Exception ex)
             {
-                EditService.Price = Convert.ToDouble(PriceBox.Text);
-                EditService.Name = NameBox.Text;
-                EditService.Worker = GetNeedWorker(MyDBContext.DBContext.Workers.ToList());
-                MyDBContext.DBContext.PaidServices.AddOrUpdate(EditService);
-                MyDBContext.DBContext.SaveChanges();
-                SW.UpdateGrid();
+                MessageBox.Show(ex.Message);
             }
         }
 
