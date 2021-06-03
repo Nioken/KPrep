@@ -70,7 +70,7 @@
             </WrapPanel>
             <WrapPanel Margin="56,0,0,0">
                 <Label Content="Телефон: "/>
-                <TextBox x:Name="PhoneBox" Height="20" Width="150"/>
+                <TextBox x:Name="PhoneBox" Height="20" Width="150" TextChanged="PhoneBox_TextChanged"/>
             </WrapPanel>
             <WrapPanel Margin="81,0,0,0">
                 <Label Content="Пол: "/>

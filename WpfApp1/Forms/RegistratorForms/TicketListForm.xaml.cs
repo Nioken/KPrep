@@ -43,16 +43,28 @@ namespace WpfApp1.Forms.RegistratorForms
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            var itm = TicketListBox.SelectedItem.ToString();
-            string[] temp = itm.Split(' ');
-            var tmp = (
-    from tmpTicker in MyDBContext.DBContext.Tickets.ToList<Ticket>()
-    where tmpTicker.TicketID.CompareTo(Convert.ToInt32(temp[0])) == 0
-    select tmpTicker
-          ).ToList();
-            MyDBContext.DBContext.Tickets.Remove(tmp[0]);
-            MyDBContext.DBContext.SaveChanges();
-            UpdateList();
+            if (TicketListBox.SelectedItem == null)
+            {
+                MessageBox.Show("Выберите строку для удаления!");
+                return;
+            }
+            try
+            {
+                var itm = TicketListBox.SelectedItem.ToString();
+                string[] temp = itm.Split(' ');
+                var tmp = (
+        from tmpTicker in MyDBContext.DBContext.Tickets.ToList<Ticket>()
+        where tmpTicker.TicketID.CompareTo(Convert.ToInt32(temp[0])) == 0
+        select tmpTicker
+              ).ToList();
+                MyDBContext.DBContext.Tickets.Remove(tmp[0]);
+                MyDBContext.DBContext.SaveChanges();
+                UpdateList();
+            }
+            catch (System.Data.Entity.Infrastructure.DbUpdateException ex)
+            {
+                MessageBox.Show(ex.Message + "\n\nВозможно запись которую вы пытаетесь удалить, имеет связанные записи в БД.");
+            }
         }
     }
 }

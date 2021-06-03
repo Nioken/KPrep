@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:WpfApp1"
         xmlns:Classes="clr-namespace:WpfApp1.Classes" x:Class="WpfApp1.AdminForm"
         mc:Ignorable="d"
-        Title="AdminForm" Height="450" Width="800" Loaded="Window_Loaded" Icon="/WpfApp1;component/Assets/Images/icon2.png">
+        Title="AdminForm" Height="450" Width="811.281" Loaded="Window_Loaded" Icon="/WpfApp1;component/Assets/Images/icon2.png">
     <Grid>
         <WrapPanel>
             <Label x:Name="InfoLabel" Content="Вы вошли как: "/>

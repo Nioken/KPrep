@@ -99,19 +99,36 @@ namespace WpfApp1
 
         private void DeleteButton_Click(object sender, RoutedEventArgs e)
         {
-            var itm = (Worker)WorkersGrid.SelectedItem;
-            var tmp = (
-    from tmpWorker in MyDBContext.DBContext.Workers.ToList<Worker>()
-    where tmpWorker.WorkerID.CompareTo(itm.WorkerID) == 0
-    select tmpWorker
-          ).ToList();
-            MyDBContext.DBContext.Workers.Remove(tmp[0]);
-            MyDBContext.DBContext.SaveChanges();
-            UpdateGrid();
-        }
+            if (WorkersGrid.SelectedItem == null)
+            {
+                MessageBox.Show("Выберите сотрудника для удаления!");
+                return;
+            }
+            try
+            {
+                var itm = (Worker)WorkersGrid.SelectedItem;
+                var tmp = (
+        from tmpWorker in MyDBContext.DBContext.Workers.ToList<Worker>()
+        where tmpWorker.WorkerID.CompareTo(itm.WorkerID) == 0
+        select tmpWorker
+              ).ToList();
+                MyDBContext.DBContext.Workers.Remove(tmp[0]);
+                MyDBContext.DBContext.SaveChanges();
+                UpdateGrid();
+            }
+            catch (System.Data.Entity.Infrastructure.DbUpdateException ex)
+            {
+                MessageBox.Show(ex.Message + "\n\nВозможно запись которую вы пытаетесь удалить, имеет связанные записи в БД.");
+            }
+}
 
         private void EditButton_Click(object sender, RoutedEventArgs e)
         {
+            if (WorkersGrid.SelectedItem == null)
+            {
+                MessageBox.Show("Выберите строку для редактирования!");
+                return;
+            }
             var itm = (Worker)WorkersGrid.SelectedItem;
             Worker EditWorker = MyDBContext.DBContext.Workers.Find(itm.WorkerID);
             WorkerAddForm workerAddForm = new WorkerAddForm(this,EditWorker);

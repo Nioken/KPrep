@@ -49,6 +49,14 @@ namespace WpfApp1.Forms.RegistratorForms
                         !String.IsNullOrWhiteSpace(LastNameBox.Text) && !String.IsNullOrWhiteSpace(AdressBox.Text) &&
                         ClientDatePicker.SelectedDate != null && !String.IsNullOrWhiteSpace(PhoneBox.Text))
                     {
+                        for (int i = 0; i < PhoneBox.Text.Length; i++)
+                        {
+                            if (char.IsLetter(PhoneBox.Text[i]))
+                            {
+                                MessageBox.Show("В номере телефона нельзя использовать буквы!");
+                                return;
+                            }
+                        }
                         Client client = new Client();
                         client.ClientID = MyDBContext.DBContext.Clients.Count();
                         client.ClientID++;
@@ -77,7 +85,19 @@ namespace WpfApp1.Forms.RegistratorForms
                 }
                 else
                 {
-                    EditClient.Name = NameBox.Text;
+                    if (!String.IsNullOrWhiteSpace(NameBox.Text) && !String.IsNullOrWhiteSpace(SurnameBox.Text) &&
+    !String.IsNullOrWhiteSpace(LastNameBox.Text) && !String.IsNullOrWhiteSpace(AdressBox.Text) &&
+    ClientDatePicker.SelectedDate != null && !String.IsNullOrWhiteSpace(PhoneBox.Text))
+                    {
+                        for (int i = 0; i < PhoneBox.Text.Length; i++)
+                        {
+                            if (char.IsLetter(PhoneBox.Text[i]))
+                            {
+                                MessageBox.Show("В номере телефона нельзя использовать буквы!");
+                                return;
+                            }
+                        }
+                        EditClient.Name = NameBox.Text;
                     EditClient.Surname = SurnameBox.Text;
                     EditClient.Lastname = LastNameBox.Text;
                     EditClient.Adress = AdressBox.Text;
@@ -93,6 +113,7 @@ namespace WpfApp1.Forms.RegistratorForms
                     }
                     MyDBContext.DBContext.Clients.AddOrUpdate(EditClient);
                     RW.UpdateGrid();
+                    }
                 }
             }
             catch (System.Exception ex)
@@ -130,6 +151,11 @@ namespace WpfApp1.Forms.RegistratorForms
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+
+        private void PhoneBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
         }
     }
 }

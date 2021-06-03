@@ -61,14 +61,31 @@ namespace WpfApp1.Forms.RegistratorForms
 
         private void DeleteButton_Click(object sender, RoutedEventArgs e)
         {
-            var itm = (Client)ClientsGrid.SelectedItem;
-            MyDBContext.DBContext.Clients.Remove(itm);
-            MyDBContext.DBContext.SaveChanges();
-            UpdateGrid();
+            if (ClientsGrid.SelectedItem == null)
+            {
+                MessageBox.Show("Выберите строку для удаления!");
+                return;
+            }
+            try
+            {
+                var itm = (Client)ClientsGrid.SelectedItem;
+                MyDBContext.DBContext.Clients.Remove(itm);
+                MyDBContext.DBContext.SaveChanges();
+                UpdateGrid();
+            }
+            catch (System.Data.Entity.Infrastructure.DbUpdateException ex)
+            {
+                MessageBox.Show(ex.Message + "\n\nВозможно запись которую вы пытаетесь удалить, имеет связанные записи в БД.");
+            }
         }
 
         private void EditButton_Click(object sender, RoutedEventArgs e)
         {
+            if (ClientsGrid.SelectedItem == null)
+            {
+                MessageBox.Show("Выберите строку для редактирования!");
+                return;
+            }
             var itm = (Client)ClientsGrid.SelectedItem;
             ClientAdd EditForm = new ClientAdd(this, itm);
             EditForm.ShowDialog();

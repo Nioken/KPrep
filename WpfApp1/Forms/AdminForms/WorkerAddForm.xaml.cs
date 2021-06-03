@@ -53,6 +53,22 @@ namespace WpfApp1.Forms
                         && WorkerDatePicker.SelectedDate != null && !String.IsNullOrWhiteSpace(ExpBox.Text) && !String.IsNullOrWhiteSpace(SpecializeBox.Text)
                         && !String.IsNullOrWhiteSpace(PhoneBox.Text) && !String.IsNullOrWhiteSpace(LoginBox.Text) && !String.IsNullOrWhiteSpace(PasswordBox.Text))
                     {
+                        for (int i = 0; i < ExpBox.Text.Length; i++)
+                        {
+                            if (char.IsLetter(ExpBox.Text[i]))
+                            {
+                                MessageBox.Show("Стаж может быть только числом!");
+                                return;
+                            }
+                        }
+                        for (int i = 0; i < PhoneBox.Text.Length; i++)
+                        {
+                            if (char.IsLetter(PhoneBox.Text[i]))
+                            {
+                                MessageBox.Show("В номере телефона нельзя использовать буквы!");
+                                return;
+                            }
+                        }
                         Worker WorkerObj = new Worker();
                         int Temp = MyDBContext.DBContext.AccessLevels.Count();
                         WorkerObj.WorkerID = Temp++;
@@ -101,7 +117,27 @@ namespace WpfApp1.Forms
                 }
                 else
                 {
-                    EditWorker.Name = NameBox.Text;
+                    if (!String.IsNullOrWhiteSpace(NameBox.Text) && !String.IsNullOrWhiteSpace(SurnameBox.Text) && !String.IsNullOrWhiteSpace(LastNameBox.Text)
+                        && WorkerDatePicker.SelectedDate != null && !String.IsNullOrWhiteSpace(ExpBox.Text) && !String.IsNullOrWhiteSpace(SpecializeBox.Text)
+                        && !String.IsNullOrWhiteSpace(PhoneBox.Text) && !String.IsNullOrWhiteSpace(LoginBox.Text) && !String.IsNullOrWhiteSpace(PasswordBox.Text))
+                    {
+                        for (int i = 0; i < ExpBox.Text.Length; i++)
+                        {
+                            if (char.IsLetter(ExpBox.Text[i]))
+                            {
+                                MessageBox.Show("Стаж может быть только числом!");
+                                return;
+                            }
+                        }
+                        for (int i = 0; i < PhoneBox.Text.Length; i++)
+                        {
+                            if (char.IsLetter(PhoneBox.Text[i]))
+                            {
+                                MessageBox.Show("В номере телефона нельзя использовать буквы!");
+                                return;
+                            }
+                        }
+                        EditWorker.Name = NameBox.Text;
                     EditWorker.Surname = SurnameBox.Text;
                     EditWorker.Lastname = LastNameBox.Text;
                     EditWorker.Expirience = Convert.ToInt32(ExpBox.Text);
@@ -129,6 +165,7 @@ namespace WpfApp1.Forms
                     MyDBContext.DBContext.Workers.AddOrUpdate(EditWorker);
                     MyDBContext.DBContext.SaveChanges();
                     AF.UpdateGrid();
+                    }
                 }
             }
             catch (System.Exception ex)

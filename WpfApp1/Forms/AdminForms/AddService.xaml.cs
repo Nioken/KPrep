@@ -75,6 +75,14 @@ namespace WpfApp1.Forms
                 {
                     if (!String.IsNullOrWhiteSpace(NameBox.Text) && !String.IsNullOrWhiteSpace(PriceBox.Text))
                     {
+                        for (int i = 0; i < PriceBox.Text.Length; i++)
+                        {
+                            if (char.IsLetter(PriceBox.Text[i]))
+                            {
+                                MessageBox.Show("Цена указываеться в виде числа!");
+                                return;
+                            }
+                        }
                         PaidServices ps = new PaidServices();
                         ps.ServiceID = MyDBContext.DBContext.PaidServices.Count();
                         ps.ServiceID++;
@@ -94,12 +102,23 @@ namespace WpfApp1.Forms
                 }
                 else
                 {
-                    EditService.Price = Convert.ToDouble(PriceBox.Text);
+                    if (!String.IsNullOrWhiteSpace(NameBox.Text) && !String.IsNullOrWhiteSpace(PriceBox.Text))
+                    {
+                        for (int i = 0; i < PriceBox.Text.Length; i++)
+                        {
+                            if (char.IsLetter(PriceBox.Text[i]))
+                            {
+                                MessageBox.Show("Цена указываеться в виде числа!");
+                                return;
+                            }
+                        }
+                        EditService.Price = Convert.ToDouble(PriceBox.Text);
                     EditService.Name = NameBox.Text;
                     EditService.Worker = GetNeedWorker(MyDBContext.DBContext.Workers.ToList());
                     MyDBContext.DBContext.PaidServices.AddOrUpdate(EditService);
                     MyDBContext.DBContext.SaveChanges();
                     SW.UpdateGrid();
+                    }
                 }
             }
             catch (System.Exception ex)

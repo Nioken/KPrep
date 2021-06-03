@@ -69,22 +69,39 @@ namespace WpfApp1.Forms
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            var row = (DataGridRow)ServicesGrid.ItemContainerGenerator.ContainerFromIndex(ServicesGrid.SelectedIndex);
-            //var SelectedService = row.Item as ShowServiceStruct;
-            var itm = (ShowServiceStruct)ServicesGrid.SelectedItem;
-            var tmp = (
-    from tmpService in MyDBContext.DBContext.PaidServices.ToList<PaidServices>()
-    where tmpService.ServiceID.CompareTo(itm.ID) == 0
-    select tmpService
-          ).ToList();
-            MyDBContext.DBContext.PaidServices.Remove(tmp[0]);
-            MyDBContext.DBContext.SaveChanges();
-            UpdateGrid();
+            if (ServicesGrid.SelectedIndex == -1)
+            {
+                MessageBox.Show("Выберите строку для удаления!");
+                return;
+            }
+            try
+            {
+                var row = (DataGridRow)ServicesGrid.ItemContainerGenerator.ContainerFromIndex(ServicesGrid.SelectedIndex);
+                //var SelectedService = row.Item as ShowServiceStruct;
+                var itm = (ShowServiceStruct)ServicesGrid.SelectedItem;
+                var tmp = (
+        from tmpService in MyDBContext.DBContext.PaidServices.ToList<PaidServices>()
+        where tmpService.ServiceID.CompareTo(itm.ID) == 0
+        select tmpService
+              ).ToList();
+                MyDBContext.DBContext.PaidServices.Remove(tmp[0]);
+                MyDBContext.DBContext.SaveChanges();
+                UpdateGrid();
+            }
+            catch (System.Data.Entity.Infrastructure.DbUpdateException ex)
+            {
+                MessageBox.Show(ex.Message + "\n\nВозможно запись которую вы пытаетесь удалить, имеет связанные записи в БД.");
+            }
         }
 
         //edit
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
+            if (ServicesGrid.SelectedItem == null)
+            {
+                MessageBox.Show("Выберите строку для редактирования!");
+                return;
+            }
             var itm = (ShowServiceStruct)ServicesGrid.SelectedItem;
             PaidServices EditService = MyDBContext.DBContext.PaidServices.Find(itm.ID);
             AddService AddForm = new AddService(this, EditService);
